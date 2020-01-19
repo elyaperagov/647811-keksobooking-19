@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Илья Пирогов](https://up.htmlacademy.ru/javascript/19/user/647811).
-* Наставник: `Неизвестно`.
+* Наставник: [Святослав Нестерук](https://htmlacademy.ru/profile/id105118).
 
 ---
 
