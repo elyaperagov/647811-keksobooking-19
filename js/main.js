@@ -24,7 +24,7 @@ var unfadeMap = function () {
   map.classList.remove('map--faded');
 };
 
-var getRandomInt = function (min, max) {
+var getRandomInteger = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
@@ -32,9 +32,9 @@ var getRandomNumber = function (number) {
   return Math.floor(Math.random() * (number + 1));
 };
 
-var arrayRandElement = function (arr) {
-  var rand = Math.floor(Math.random() * arr.length);
-  return arr[rand];
+var generateRandomArrayElement = function (array) {
+  var random = Math.floor(Math.random() * array.length);
+  return array[random];
 };
 
 var generateObjects = function (quantity) {
@@ -46,20 +46,20 @@ var generateObjects = function (quantity) {
       },
       'offer': {
         'title': 'заголовок предложения',
-        'address': getRandomNumber(map.clientWidth) + ', ' + getRandomInt(130, 630),
-        'price': getRandomInt(propertyPrice.MINIMUM, propertyPrice.MAXIMUM),
-        'type': arrayRandElement(propertyType),
-        'rooms': getRandomInt(propertyRooms.MINIMUM, propertyRooms.MAXIMUM),
-        'guests': getRandomInt(propertyGuests.MINIMUM, propertyGuests.MAXIMUM),
-        'checkin': arrayRandElement(CHECKIN),
-        'checkout': arrayRandElement(CHECKOUT),
-        'features': arrayRandElement(propertyFeatures),
+        'address': getRandomNumber(map.clientWidth) + ', ' + getRandomInteger(130, 630),
+        'price': getRandomInteger(propertyPrice.MINIMUM, propertyPrice.MAXIMUM),
+        'type': generateRandomArrayElement(propertyType),
+        'rooms': getRandomInteger(propertyRooms.MINIMUM, propertyRooms.MAXIMUM),
+        'guests': getRandomInteger(propertyGuests.MINIMUM, propertyGuests.MAXIMUM),
+        'checkin': generateRandomArrayElement(CHECKIN),
+        'checkout': generateRandomArrayElement(CHECKOUT),
+        'features': generateRandomArrayElement(propertyFeatures),
         'description': 'строка с описанием',
-        'photos': arrayRandElement(propertyPhotos)
+        'photos': generateRandomArrayElement(propertyPhotos)
       },
       'location': {
         'x': getRandomNumber(map.clientWidth),
-        'y': getRandomInt(130, 630)
+        'y': getRandomInteger(130, 630)
       }
     });
   }
