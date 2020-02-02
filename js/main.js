@@ -48,7 +48,7 @@ var getRandomElement = function (array) {
 
 var generateObjects = function (quantity) {
   var offers = [];
-  for (var i = 0; i < quantity; i++) { // почему не quantity.length
+  for (var i = 0; i < quantity; i++) {
     offers.push({
       'author': {
         'avatar': 'img/avatars/user0' + (i + 1) + '.png'
@@ -92,7 +92,6 @@ var drawPins = function (array) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < array.length; i++) {
     fragment.appendChild(renderTemplate(array[i]));
-    // console.log(array);
   }
   pins.appendChild(fragment);
 };
