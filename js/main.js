@@ -17,11 +17,20 @@ var map = document.querySelector('.map');
 var pins = document.querySelector('.map__pins');
 var template = document.querySelector('#pin').content.querySelector('.map__pin');
 var propertyTypes = ['palace', 'flat', 'house', 'bungalo'];
-// var propertyFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-// var propertyPhotos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var propertyFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var propertyPhotos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
 var unfadeMap = function () {
   map.classList.remove('map--faded');
+};
+
+var getRandomArray = function (arr) {
+  var number = getRandomInteger(1, arr.length);
+  var arrItems = [];
+  for (var i = 0; i < number; i++) {
+    arrItems.push(arr[i]);
+  }
+  return arrItems;
 };
 
 var getRandomInteger = function (min, max) {
@@ -53,9 +62,9 @@ var generateObjects = function (quantity) {
         'guests': getRandomInteger(Guests.MINIMUM, Guests.MAXIMUM),
         'CHECKIN_TIMES': getRandomElement(CHECKIN_TIMES),
         'CHECKOUT_TIMES': getRandomElement(CHECKOUT_TIMES),
-        'features': getRandomElement(['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner']),
+        'features': getRandomArray(propertyFeatures),
         'description': 'строка с описанием',
-        'photos': getRandomElement(['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'])
+        'photos': getRandomArray(propertyPhotos)
       },
       'location': {
         'x': getRandomNumber(map.clientWidth),
@@ -67,8 +76,8 @@ var generateObjects = function (quantity) {
 };
 
 var renderTemplate = function (pin) {
-  var PIN_WIDTH = 40;
-  var PIN_HEIGHT = 40;
+  var PIN_WIDTH = 50;
+  var PIN_HEIGHT = 70;
   var userPin = template.cloneNode(true);
 
   userPin.style.left = (pin.location.x - PIN_WIDTH * 0.5) + 'px';
@@ -83,6 +92,7 @@ var drawPins = function (array) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < array.length; i++) {
     fragment.appendChild(renderTemplate(array[i]));
+    // console.log(array);
   }
   pins.appendChild(fragment);
 };
