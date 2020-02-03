@@ -19,6 +19,9 @@ var template = document.querySelector('#pin').content.querySelector('.map__pin')
 var propertyTypes = ['palace', 'flat', 'house', 'bungalo'];
 var propertyFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var propertyPhotos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var mainPin = document.querySelector('.map__pin--main');
+var fieldsets = document.querySelectorAll('fieldset');
+var mapFilters = document.querySelectorAll('select[class=map__filter]');
 
 var unfadeMap = function () {
   map.classList.remove('map--faded');
@@ -96,5 +99,32 @@ var drawPins = function (array) {
   pins.appendChild(fragment);
 };
 
-drawPins(generateObjects(8));
-unfadeMap();
+// drawPins(generateObjects(8));
+// unfadeMap();
+
+var changeMapState = function (object, newState) {
+  for (var i = 0; i < object.length; i++) {
+    object[i].disabled = newState;
+  }
+};
+
+changeMapState(fieldsets, false);
+changeMapState(mapFilters, false);
+
+var activateMap = function () {
+  unfadeMap();
+  changeMapState(fieldsets, true);
+  changeMapState(mapFilters, true);
+  drawPins(generateObjects(8));
+};
+
+mainPin.addEventListener('keydown', function (evt) {
+  evt.preventDefault();
+  if (evt.keyCode === 13) {
+    activateMap();
+  }
+});
+
+mainPin.addEventListener('mousedown', function () {
+  activateMap();
+});
