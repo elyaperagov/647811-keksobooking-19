@@ -116,6 +116,7 @@ var activateMap = function () {
   changeMapState(fieldsets, true);
   changeMapState(mapFilters, true);
   drawPins(generateObjects(8));
+  setAddress(mainPin, mainPinAddressInput);
 };
 
 mainPin.addEventListener('keydown', function (evt) {
@@ -125,6 +126,62 @@ mainPin.addEventListener('keydown', function (evt) {
   }
 });
 
-mainPin.addEventListener('mousedown', function () {
+var MOUSE_KEY = 0;
+mainPin.addEventListener('mousedown', function (evt) {
+  if (evt.button === MOUSE_KEY) {
   activateMap();
+  }
 });
+
+var MAINPIN_HEIGHT = 22;
+var mainPin = document.querySelector('.map__pin--main');
+
+function getCoords(elem) { // кроме IE8-
+  var box = elem.getBoundingClientRect();
+
+  return {
+    top: box.top + pageYOffset,
+    left: box.left + pageXOffset
+  };
+
+}
+
+var mainPinAddressInput = document.querySelector('#address');
+var setAddress = function (objectForTrack, objectInput) {
+  if (map.classList.contains('map--faded') === true) {
+    objectInput.value = mainPin.offsetLeft + mainPin.clientWidth / 2 + ', ' + (mainPin.offsetTop + mainPin.clientHeight / 2);
+    console.log(mainPin.offsetLeft);
+    console.log(mainPin.clientWidth);
+  } else {
+    objectInput.value = getCoords(mainPinAddressInput);
+  }
+};
+
+setAddress(mainPin, mainPinAddressInput);
+
+
+// var MAINPIN_HEIGHT = 22;
+// var mainPin = document.querySelector('.map__pin--main');
+// var mainPinAddressInput = document.querySelector('#address');
+//
+// var getAddress = function (coords) {
+//   mainPinAddressInput.value = coords.left + ' , ' + coords.top;
+// }
+//
+// var getCoords = function (elem) { // кроме IE8-
+//   var box = elem.getBoundingClientRect();
+//
+//   return {
+//     top: box.top + pageYOffset,
+//     left: box.left + pageXOffset
+//   };
+// }
+//
+// var setAddress = function (object, objectInput) {
+//   if (map.classList.contains('map--faded')) {
+//     objectInput.value = getAddress(getCoords(mainPin));
+//   }
+// };
+//
+// console.log(getCoords(mainPin));
+// setAddress(mainPin, mainPinAddressInput);
