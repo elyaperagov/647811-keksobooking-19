@@ -135,6 +135,7 @@ mainPin.addEventListener('mousedown', function (evt) {
 
 var MAINPIN_HEIGHT = 22;
 var mainPin = document.querySelector('.map__pin--main');
+var mainPinAddressInput = document.querySelector('#address');
 
 function getCoords(elem) { // кроме IE8-
   var box = elem.getBoundingClientRect();
@@ -146,12 +147,11 @@ function getCoords(elem) { // кроме IE8-
 
 }
 
-var mainPinAddressInput = document.querySelector('#address');
-var setAddress = function (objectForTrack, objectInput) {
-  if (map.classList.contains('map--faded') === true) {
+var setAddress = function (object, objectInput) {
+  if (map.classList.contains('map--faded')) {
     objectInput.value = mainPin.offsetLeft + mainPin.clientWidth / 2 + ', ' + (mainPin.offsetTop + mainPin.clientHeight / 2);
-    console.log(mainPin.offsetLeft);
-    console.log(mainPin.clientWidth);
+    // console.log(mainPin.offsetLeft);
+    // console.log(mainPin.clientWidth);
   } else {
     objectInput.value = getCoords(mainPinAddressInput);
   }
