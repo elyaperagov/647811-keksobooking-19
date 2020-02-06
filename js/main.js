@@ -18,7 +18,7 @@ var Prices = {
 var map = document.querySelector('.map');
 var pins = document.querySelector('.map__pins');
 var template = document.querySelector('#pin').content.querySelector('.map__pin');
-var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
+// var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
 var propertyTypes = ['palace', 'flat', 'house', 'bungalo'];
 var propertyFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var propertyPhotos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
@@ -79,7 +79,7 @@ var generateObjects = function (quantity) {
         'y': getRandomInteger(130, 630)
       }
     });
-    console.log(offers);
+    // console.log(offers);
   }
   return offers;
 };
@@ -95,11 +95,11 @@ var renderTemplate = function (pin) {
   userPin.querySelector('img').src = pin.author.avatar;
   userPin.querySelector('img').alt = pin.offer.title;
 
-  var renderCards = function (card) {
-    var element = adTemplate.cloneNode(true);
-    element.querySelector('.popup__title').textContent = card.offer.title;
-    return card;
-  }
+  // var renderCards = function (card) {
+  //   var element = adTemplate.cloneNode(true);
+  //   element.querySelector('.popup__title').textContent = card.offer.title;
+  //   return card;
+  // };
 
   return userPin;
 };
