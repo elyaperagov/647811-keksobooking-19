@@ -166,12 +166,16 @@ var Preferences = {
 };
 
 var ALL_PRICES = [0, 1000, 5000, 10000];
+// var allRooms = ['1 комната', '2 комнаты', '3 комнаты', '100 комнат'];
+// var allGuests = ['для 1 гостя', 'для 2 гостей', 'для 3 гостей', 'не для гостей'];
 var formTitle = form.querySelector('input[name=title]');
 var submitButton = form.querySelector('.ad-form__submit');
 var price = form.querySelector('input[name=price]');
 var houseType = form.querySelector('select[name=type]');
-// var timeIn = form.querySelector('select[name=timein]');
-// var timeOut = form.querySelector('input[name=timeout]');
+var timeIn = form.querySelector('#timein');
+var timeOut = form.querySelector('#timeout');
+var roomNumber = form.querySelector('#room_number');
+var capacity = form.querySelector('#capacity');
 
 var getSelectedOption = function (object) {
   var objectOptions = object.querySelectorAll('option');
@@ -187,9 +191,14 @@ var setOptions = function (evt) {
   if (evt.target === houseType) {
     price.value = ALL_PRICES[getSelectedOption(houseType)];
     price.placeholder = price.value;
-  // } if (evt.target === timeIn) {
-  //   timeOut.value = CHECKOUT_TIMES[getSelectedOption(timeIn)];
-  //   timeOut.placeholder = timeOut.value;
+  } if (evt.target === timeIn) {
+    timeOut.value = CHECKOUT_TIMES[getSelectedOption(timeIn)];
+    timeOut.placeholder = timeOut.value;
+  } if (evt.target === timeOut) {
+    timeIn.value = CHECKIN_TIMES[getSelectedOption(timeOut)];
+    timeIn.placeholder = timeIn.value;
+  } if (evt.target === roomNumber) {
+    changeMapState(capacity, true);
   }
 };
 
