@@ -187,6 +187,8 @@ var getSelectedOption = function (object) {
   return selectedOption;
 };
 
+// changeMapState(capacity, true);
+
 var setOptions = function (evt) {
   if (evt.target === houseType) {
     price.value = ALL_PRICES[getSelectedOption(houseType)];
@@ -198,7 +200,14 @@ var setOptions = function (evt) {
     timeIn.value = CHECKIN_TIMES[getSelectedOption(timeOut)];
     timeIn.placeholder = timeIn.value;
   } if (evt.target === roomNumber) {
-    changeMapState(capacity, true);
+    for (var i = 0; i < capacity.length; i++) {
+      if (capacity[i].value === '1') {
+        // console.log(capacity[i]);
+        changeMapState(capacity[i], true);
+      // } else {
+      //   changeMapState(capacity, true);
+      }
+    }
   }
 };
 
