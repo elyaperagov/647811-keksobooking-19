@@ -112,8 +112,6 @@ var drawPins = function (array) {
   pins.appendChild(fragment);
 };
 
-// drawPins(generateObjects(8));
-// unfadeMap();
 
 var changeMapState = function (object, newState) {
   for (var i = 0; i < object.length; i++) {
@@ -146,24 +144,16 @@ mainPin.addEventListener('mousedown', function (evt) {
   }
 });
 
-var getCoords = function (elem) { // кроме IE8-
-  var box = elem.getBoundingClientRect();
-
-  return {
-    top: box.top + pageYOffset,
-    left: box.left + pageXOffset
-  };
-
-};
+// var getCoords = function (elem) { // кроме IE8-
+//   var box = elem.getBoundingClientRect();
+//   return {
+//     top: box.top + pageYOffset,
+//     left: box.left + pageXOffset
+//   };
+// };
 
 var setAddress = function (object, objectInput) {
-  if (map.classList.contains('map--faded')) {
-    objectInput.value = mainPin.offsetLeft + mainPin.clientWidth / 2 + ', ' + (mainPin.offsetTop + mainPin.clientHeight / 2);
-    // console.log(mainPin.offsetLeft);
-    // console.log(mainPin.clientWidth);
-  } else {
-    objectInput.value = getCoords(mainPinAddressInput);
-  }
+  objectInput.value = object.offsetLeft + object.clientWidth / 2 + ', ' + (object.offsetTop + object.clientHeight / 2);
 };
 
 setAddress(mainPin, mainPinAddressInput);
@@ -200,27 +190,44 @@ var getSelectedOption = function (object) {
 
 var setOptions = function (evt) {
   if (evt.target === houseType) {
-    price.value = ALL_PRICES[getSelectedOption(houseType)];
-    price.placeholder = price.value;
+    price.min = ALL_PRICES[getSelectedOption(houseType)];
+    price.placeholder = price.min;
   } if (evt.target === timeIn) {
     timeOut.value = CHECKOUT_TIMES[getSelectedOption(timeIn)];
     timeOut.placeholder = timeOut.value;
   } if (evt.target === timeOut) {
     timeIn.value = CHECKIN_TIMES[getSelectedOption(timeOut)];
     timeIn.placeholder = timeIn.value;
-  } if (evt.target === roomNumber) {
-    for (var i = 0; i < capacity.length; i++) {
-      if (capacity[i].value === '1') {
-        // console.log(capacity[i]);
-        changeMapState(capacity[i], true);
-      // } else {
-      //   changeMapState(capacity, true);
-      }
-    }
+  // } if (evt.target === roomNumber) {
+  //   roomsInputClickHandler();
   }
 };
 
 form.addEventListener('change', setOptions);
+
+var disableOptions = function (select) {
+  for (var i = 0; i < select.options.length; i++) {
+    select.options[i].setAttribute('disabled', '');
+  }
+};
+
+var roomsInputClickHandler = function () {
+  disableOptions(capacity);
+  if (roomNumber.value === '1') {
+    capacity.options[2].removeAttribute('disabled');
+  } if (roomNumber.value === '2') {
+    capacity.options[1].removeAttribute('disabled');
+    capacity.options[2].removeAttribute('disabled');
+  } if (roomNumber.value === '3') {
+    capacity.options[0].removeAttribute('disabled');
+    capacity.options[1].removeAttribute('disabled');
+    capacity.options[2].removeAttribute('disabled');
+  } if (roomNumber.value === '100') {
+    capacity.options[3].removeAttribute('disabled');
+  }
+};
+
+roomNumber.addEventListener('click', roomsInputClickHandler);
 
 var colorChange = function (element) {
   element.style = 'border-color: red; border-width: 5px;';
@@ -243,7 +250,11 @@ var splitTitle = function () {
   var titleForInput = formTitle.value.split('');
   if (formTitle.value !== '') {
     validateTitle(titleForInput);
+  } else if (formTitle.value === '') {
+    formTitle.setCustomValidity('Необходимо заполнить это поле!');
+    return false;
   }
+  return true;
 };
 
 submitButton.addEventListener('click', splitTitle);
