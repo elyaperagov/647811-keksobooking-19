@@ -2,7 +2,8 @@
 var CHECKIN_TIMES = ['12:00', '13:00', '14:00'];
 var CHECKOUT_TIMES = ['12:00', '13:00', '14:00'];
 var MOUSE_KEY = 0;
-// var MAINPIN_HEIGHT = 22;
+var MAINPIN_HEIGHT = 22;
+var TRANSLATE_X = 6;
 var Rooms = {
   MINIMUM: 1,
   MAXIMUM: 10
@@ -15,6 +16,7 @@ var Prices = {
   MINIMUM: 15,
   MAXIMUM: 200
 };
+var ENTER_KEY = 13;
 var map = document.querySelector('.map');
 var pins = document.querySelector('.map__pins');
 var template = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -27,6 +29,11 @@ var mainPin = document.querySelector('.map__pin--main');
 var fieldsets = document.querySelectorAll('fieldset');
 var mapFilters = document.querySelectorAll('select[class=map__filter]');
 var form = document.querySelector('.ad-form');
+var reset = document.querySelector('.ad-form__reset');
+
+reset.addEventListener('click', function () {
+  form.reset();
+});
 
 var unfadeMap = function () {
   map.classList.remove('map--faded');
@@ -104,6 +111,7 @@ var renderTemplate = function (pin) {
   return userPin;
 };
 
+
 var drawPins = function (array) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < array.length; i++) {
@@ -133,7 +141,7 @@ var activateMap = function () {
 
 mainPin.addEventListener('keydown', function (evt) {
   evt.preventDefault();
-  if (evt.keyCode === 13) {
+  if (evt.keyCode === ENTER_KEY) {
     activateMap();
   }
 });
@@ -144,33 +152,44 @@ mainPin.addEventListener('mousedown', function (evt) {
   }
 });
 
-// var getCoords = function (elem) { // кроме IE8-
-//   var box = elem.getBoundingClientRect();
-//   return {
-//     top: box.top + pageYOffset,
-//     left: box.left + pageXOffset
-//   };
-// };
+var getCoords = function (elem) {
+  return {
+    top: elem.offsetLeft + elem.clientWidth / 2,
+    left: elem.offsetTop + elem.clientHeight + MAINPIN_HEIGHT - TRANSLATE_X
+  };
+};
 
 var setAddress = function (object, objectInput) {
-  objectInput.value = object.offsetLeft + object.clientWidth / 2 + ', ' + (object.offsetTop + object.clientHeight / 2);
+  if (map.classList.contains('map--faded')) {
+    objectInput.value = mainPin.offsetLeft + mainPin.clientWidth / 2 + ', ' + (mainPin.offsetTop + mainPin.clientHeight / 2);
+  } else {
+    objectInput.value = getCoords(mainPin).top + ', ' + getCoords(mainPin).left;
+  }
 };
 
 setAddress(mainPin, mainPinAddressInput);
 
 /*  ----------------------------------------------- */
-var Preferences = {
-  MIN_TITLE_LENGTH: 30,
-  MAX_TITLE_LENGTH: 100
-};
+// var Preferences = {
+//   MIN_TITLE_LENGTH: 30,
+//   MAX_TITLE_LENGTH: 100
+// };
+
+// var ALL_PRICES = {
+//   'palace': 10000,
+//   'flat': 1000,
+//   'house': 5000,
+//   'bungalo': 0
+// };
 
 var ALL_PRICES = [0, 1000, 5000, 10000];
+
 // var allRooms = ['1 комната', '2 комнаты', '3 комнаты', '100 комнат'];
 // var allGuests = ['для 1 гостя', 'для 2 гостей', 'для 3 гостей', 'не для гостей'];
-var formTitle = form.querySelector('input[name=title]');
-var submitButton = form.querySelector('.ad-form__submit');
+// var formTitle = form.querySelector('input[name=title]');
+// var submitButton = form.querySelector('.ad-form__submit');
 var price = form.querySelector('input[name=price]');
-var houseType = form.querySelector('select[name=type]');
+var houseType = form.querySelector('#type');
 var timeIn = form.querySelector('#timein');
 var timeOut = form.querySelector('#timeout');
 var roomNumber = form.querySelector('#room_number');
@@ -229,35 +248,55 @@ var roomsInputClickHandler = function () {
 
 roomNumber.addEventListener('click', roomsInputClickHandler);
 
-var colorChange = function (element) {
-  element.style = 'border-color: red; border-width: 5px;';
-};
-
-var validateTitle = function (title) {
-  if (title.length > Preferences.MAX_TITLE_LENGTH) {
-    formTitle.setCustomValidity('Максимальная длина — 100 символов');
-    colorChange(formTitle);
-    return false;
-  } else if (title.length < Preferences.MIN_TITLE_LENGTH) {
-    formTitle.setCustomValidity('Минимальная длина — 30 символов');
-    colorChange(formTitle);
-    return false;
+var capacityInputClickHandler = function () {
+  disableOptions(roomNumber);
+  if (capacity.value === '0') {
+    roomNumber.options[3].removeAttribute('disabled');
+  } if (capacity.value === '1') {
+    roomNumber.options[0].removeAttribute('disabled');
+  } if (capacity.value === '2') {
+    roomNumber.options[1].removeAttribute('disabled');
+    roomNumber.options[2].removeAttribute('disabled');
+  } if (capacity.value === '3') {
+    roomNumber.options[2].removeAttribute('disabled');
   }
-  return true;
 };
 
-var splitTitle = function () {
-  var titleForInput = formTitle.value.split('');
-  if (formTitle.value !== '') {
-    validateTitle(titleForInput);
-  } else if (formTitle.value === '') {
-    formTitle.setCustomValidity('Необходимо заполнить это поле!');
-    return false;
-  }
-  return true;
-};
+capacity.addEventListener('click', capacityInputClickHandler);
 
-submitButton.addEventListener('click', splitTitle);
+// var colorChange = function (element) {
+//   element.style = 'border-color: red; border-width: 5px;';
+// };
+
+
+// var validateTitle = function (title) {
+//   if (title.length > Preferences.MAX_TITLE_LENGTH) {
+//     formTitle.setCustomValidity('Максимальная длина — 100 символов');
+//     colorChange(formTitle);
+//     formTitle.reset();
+//     return false;
+//   } else if (title.length < Preferences.MIN_TITLE_LENGTH) {
+//     formTitle.setCustomValidity('Минимальная длина — 30 символов');
+//     colorChange(formTitle);
+//     formTitle.reset();
+//     return false;
+//   }
+//   return true;
+// };
+//
+// var splitTitle = function () {
+//   var titleForInput = formTitle.value.split('');
+//   if (formTitle.value !== '') {
+//     validateTitle(titleForInput);
+//   } else if (formTitle.value === '') {
+//     formTitle.setCustomValidity('Необходимо заполнить это поле!');
+//     formTitle.reset();
+//     return false;
+//   }
+//   return true;
+// };
+//
+// submitButton.addEventListener('click', splitTitle);
 
 // var MAINPIN_HEIGHT = 22;
 // var mainPin = document.querySelector('.map__pin--main');
