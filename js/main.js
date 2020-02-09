@@ -215,22 +215,20 @@ var setOptions = function (evt) {
   } if (evt.target === timeOut) {
     timeIn.value = CHECKIN_TIMES[getSelectedOption(timeOut)];
     timeIn.placeholder = timeIn.value;
+  } if (evt.target === roomNumber || evt.target === capacity) {
+    if (Number(roomNumber.value) === 1 && Number(capacity.value) !== 1) {
+      capacity.setCustomValidity('Одна комната - один гость');
+    } else if (Number(roomNumber.value) === 2 && Number(capacity.value) !== 1 && Number(capacity.value) !== 2) {
+      capacity.setCustomValidity('Две комнаты - для одного или двух гостей');
+    } else if (Number(roomNumber.value) === 3 && Number(capacity.value) === 0) {
+      capacity.setCustomValidity('3 комнаты — для 3, 2 или для 1 гостя');
+    } else if (Number(roomNumber.value) === 100 && Number(capacity.value) !== 0) {
+      capacity.setCustomValidity('100 комнат — не для гостей');
+    } else {
+      capacity.setCustomValidity('');
+    }
   }
 };
-
-form.addEventListener('input', function () {
-  if (Number(roomNumber.value) === 1 && Number(capacity.value) !== 1) {
-    capacity.setCustomValidity('Одна комната - один гость');
-  } else if (Number(roomNumber.value) === 2 && Number(capacity.value) !== 1 && Number(capacity.value) !== 2) {
-    capacity.setCustomValidity('Две комнаты - для одного или двух гостей');
-  } else if (Number(roomNumber.value) === 3 && Number(capacity.value) === 0) {
-    capacity.setCustomValidity('3 комнаты — для 3, 2 или для 1 гостя');
-  } else if (Number(roomNumber.value) === 100 && Number(capacity.value) !== 0) {
-    capacity.setCustomValidity('100 комнат — не для гостей');
-  } else {
-    capacity.setCustomValidity('');
-  }
-});
 
 form.addEventListener('change', setOptions);
 
