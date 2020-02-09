@@ -205,8 +205,6 @@ var getSelectedOption = function (object) {
   return selectedOption;
 };
 
-// changeMapState(capacity, true);
-
 var setOptions = function (evt) {
   if (evt.target === houseType) {
     price.min = ALL_PRICES[getSelectedOption(houseType)];
@@ -217,52 +215,66 @@ var setOptions = function (evt) {
   } if (evt.target === timeOut) {
     timeIn.value = CHECKIN_TIMES[getSelectedOption(timeOut)];
     timeIn.placeholder = timeIn.value;
-  // } if (evt.target === roomNumber) {
-  //   roomsInputClickHandler();
   }
 };
+
+form.addEventListener('input', function () {
+  if (Number(roomNumber.value) === 1 && Number(capacity.value) !== 1) {
+    capacity.setCustomValidity('Одна комната - один гость');
+  } else if (Number(roomNumber.value) === 2 && Number(capacity.value) !== 1 && Number(capacity.value) !== 2) {
+    capacity.setCustomValidity('Две комнаты - для одного или двух гостей');
+  } else if (Number(roomNumber.value) === 3 && Number(capacity.value) === 0) {
+    capacity.setCustomValidity('3 комнаты — для 3, 2 или для 1 гостя');
+  } else if (Number(roomNumber.value) === 100 && Number(capacity.value) !== 0) {
+    capacity.setCustomValidity('100 комнат — не для гостей');
+  } else {
+    capacity.setCustomValidity('');
+  }
+});
 
 form.addEventListener('change', setOptions);
 
-var disableOptions = function (select) {
-  for (var i = 0; i < select.options.length; i++) {
-    select.options[i].setAttribute('disabled', '');
-  }
-};
+// var disableOptions = function (select) {
+//   for (var i = 0; i < select.options.length; i++) {
+//     select.options[i].setAttribute('disabled', '');
+//   }
+// };
 
-var roomsInputClickHandler = function () {
-  disableOptions(capacity);
-  if (roomNumber.value === '1') {
-    capacity.options[2].removeAttribute('disabled');
-  } if (roomNumber.value === '2') {
-    capacity.options[1].removeAttribute('disabled');
-    capacity.options[2].removeAttribute('disabled');
-  } if (roomNumber.value === '3') {
-    capacity.options[0].removeAttribute('disabled');
-    capacity.options[1].removeAttribute('disabled');
-    capacity.options[2].removeAttribute('disabled');
-  } if (roomNumber.value === '100') {
-    capacity.options[3].removeAttribute('disabled');
-  }
-};
-
-roomNumber.addEventListener('click', roomsInputClickHandler);
-
-var capacityInputClickHandler = function () {
-  disableOptions(roomNumber);
-  if (capacity.value === '0') {
-    roomNumber.options[3].removeAttribute('disabled');
-  } if (capacity.value === '1') {
-    roomNumber.options[0].removeAttribute('disabled');
-  } if (capacity.value === '2') {
-    roomNumber.options[1].removeAttribute('disabled');
-    roomNumber.options[2].removeAttribute('disabled');
-  } if (capacity.value === '3') {
-    roomNumber.options[2].removeAttribute('disabled');
-  }
-};
-
-capacity.addEventListener('click', capacityInputClickHandler);
+// roomNumber.addEventListener('click', roomsInputClickHandler);
+//
+// var roomsInputClickHandler = function () {
+//   disableOptions(capacity);
+//   if (roomNumber.value === '1') {
+//     capacity.options[2].removeAttribute('disabled');
+//   } if (roomNumber.value === '2') {
+//     capacity.options[1].removeAttribute('disabled');
+//     capacity.options[2].removeAttribute('disabled');
+//   } if (roomNumber.value === '3') {
+//     capacity.options[0].removeAttribute('disabled');
+//     capacity.options[1].removeAttribute('disabled');
+//     capacity.options[2].removeAttribute('disabled');
+//   } if (roomNumber.value === '100') {
+//     capacity.options[3].removeAttribute('disabled');
+//   }
+// };
+//
+// roomNumber.addEventListener('click', roomsInputClickHandler);
+//
+// var capacityInputClickHandler = function () {
+//   disableOptions(roomNumber);
+//   if (capacity.value === '0') {
+//     roomNumber.options[3].removeAttribute('disabled');
+//   } if (capacity.value === '1') {
+//     roomNumber.options[0].removeAttribute('disabled');
+//   } if (capacity.value === '2') {
+//     roomNumber.options[1].removeAttribute('disabled');
+//     roomNumber.options[2].removeAttribute('disabled');
+//   } if (capacity.value === '3') {
+//     roomNumber.options[2].removeAttribute('disabled');
+//   }
+// };
+//
+// capacity.addEventListener('click', capacityInputClickHandler);
 
 // var colorChange = function (element) {
 //   element.style = 'border-color: red; border-width: 5px;';
