@@ -150,24 +150,22 @@ mainPin.addEventListener('keydown', function (evt) {
   }
 });
 
-mainPin.addEventListener('mousedown', function (evt) {
+mainPin.addEventListener('mouseup', function (evt) {
   if (evt.button === MOUSE_KEY) {
     activateMap();
   }
 });
 
-var getPinCoords = function (pin) {
-  return {
-    top: pin.offsetLeft + pin.clientWidth / 2,
-    left: pin.offsetTop + pin.clientHeight + MAINPIN_HEIGHT - TRANSLATE_X
-  };
+var getPinCoords = function (pin, objectInput) {
+  objectInput.value = Math.floor((parseInt(pin.style.left, 10) + pin.offsetWidth / 2)) + ', ' + Math.floor((parseInt(pin.style.top, 10) + pin.offsetHeight + MAINPIN_HEIGHT - TRANSLATE_X));
+  return objectInput;
 };
 
 var setAddress = function (objectInput) {
   if (map.classList.contains('map--faded')) {
-    objectInput.value = mainPin.offsetLeft + mainPin.clientWidth / 2 + ', ' + (mainPin.offsetTop + mainPin.clientHeight / 2);
+    objectInput.value = Math.floor(mainPin.offsetLeft + mainPin.clientWidth / 2) + ', ' + Math.floor(mainPin.offsetTop + mainPin.clientHeight / 2);
   } else {
-    objectInput.value = getPinCoords(mainPin).top + ', ' + getPinCoords(mainPin).left;
+    getPinCoords(mainPin, mainPinAddressInput);
   }
 };
 
