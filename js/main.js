@@ -130,17 +130,17 @@ var changeMapState = function (object, newState) {
 changeMapState(fieldsets, true);
 changeMapState(mapFilters, true);
 
-var flag = false;
+var isActivated = false;
 var activateMap = function () {
   unfadeMap();
   changeMapState(fieldsets, false);
   changeMapState(mapFilters, false);
-  if (!flag) {
+  if (!isActivated) {
     drawPins(generateObjects(8));
-    flag = true;
+    isActivated = true;
   }
   form.classList.remove('ad-form--disabled');
-  setAddress(mainPin, mainPinAddressInput);
+  setAddress(mainPinAddressInput);
 };
 
 mainPin.addEventListener('keydown', function (evt) {
@@ -150,28 +150,28 @@ mainPin.addEventListener('keydown', function (evt) {
   }
 });
 
-mainPin.addEventListener('mouseup', function (evt) {
+mainPin.addEventListener('mousedown', function (evt) {
   if (evt.button === MOUSE_KEY) {
     activateMap();
   }
 });
 
-var getCoords = function (elem) {
+var getPinCoords = function (pin) {
   return {
-    top: elem.offsetLeft + elem.clientWidth / 2,
-    left: elem.offsetTop + elem.clientHeight + MAINPIN_HEIGHT - TRANSLATE_X
+    top: pin.offsetLeft + pin.clientWidth / 2,
+    left: pin.offsetTop + pin.clientHeight + MAINPIN_HEIGHT - TRANSLATE_X
   };
 };
 
-var setAddress = function (object, objectInput) {
+var setAddress = function (objectInput) {
   if (map.classList.contains('map--faded')) {
     objectInput.value = mainPin.offsetLeft + mainPin.clientWidth / 2 + ', ' + (mainPin.offsetTop + mainPin.clientHeight / 2);
   } else {
-    objectInput.value = getCoords(mainPin).top + ', ' + getCoords(mainPin).left;
+    objectInput.value = getPinCoords(mainPin).top + ', ' + getPinCoords(mainPin).left;
   }
 };
 
-setAddress(mainPin, mainPinAddressInput);
+setAddress(mainPinAddressInput);
 
 /*  ----------------------------------------------- */
 
@@ -197,7 +197,7 @@ var getSelectedOption = function (object) {
   return selectedOption;
 };
 
-var setCapacity = function (rooms, guests) {
+var checkCapacity = function (rooms, guests) {
   if (Number(rooms.value) === ROOMS_VALUES[0] && Number(guests.value) !== CAPACITY_VALUES[1]) {
     capacity.setCustomValidity('Одна комната - один гость');
   } else if (Number(rooms.value) === ROOMS_VALUES[1] && Number(guests.value) !== CAPACITY_VALUES[1] && Number(capacity.value) !== CAPACITY_VALUES[2]) {
@@ -222,7 +222,7 @@ var setOptions = function (evt) {
     timeIn.value = CHECKIN_TIMES[getSelectedOption(timeOut)];
     timeIn.placeholder = timeIn.value;
   } if (evt.target === roomNumber || evt.target === capacity) {
-    setCapacity(roomNumber, capacity);
+    checkCapacity(roomNumber, capacity);
   }
 };
 
