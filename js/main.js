@@ -157,16 +157,11 @@ mainPin.addEventListener('mousedown', function (evt) {
   }
 });
 
-var getPinCoords = function (pin, address) {
-  address.value = Math.floor((parseInt(pin.style.left, 10) + pin.offsetWidth / 2)) + ', ' + Math.floor((parseInt(pin.style.top, 10) + pin.offsetHeight + MAINPIN_HEIGHT - TRANSLATE_X));
-  return address;
-};
-
 var setAddress = function (address) {
   if (map.classList.contains('map--faded')) {
     address.value = Math.floor(mainPin.offsetLeft + mainPin.clientWidth / 2) + ', ' + Math.floor(mainPin.offsetTop + mainPin.clientHeight / 2);
   } else {
-    getPinCoords(mainPin, mainPinAddressInput);
+    address.value = Math.floor(parseInt(mainPin.style.left, 10) + mainPin.offsetWidth / 2) + ', ' + Math.floor(parseInt(mainPin.style.top, 10) + mainPin.offsetHeight + MAINPIN_HEIGHT - TRANSLATE_X);
   }
 };
 
