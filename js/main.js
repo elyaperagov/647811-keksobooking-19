@@ -30,6 +30,7 @@ var mainPin = document.querySelector('.map__pin--main');
 var fieldsets = document.querySelectorAll('fieldset');
 var mapFilters = document.querySelectorAll('select[class=map__filter]');
 var form = document.querySelector('.ad-form');
+// var filter = map.querySelector('.map__filters-container');
 // var reset = document.querySelector('.ad-form__reset');
 //
 // reset.addEventListener('click', function () {
@@ -101,16 +102,16 @@ var renderTemplate = function (pin) {
   userPin.style.top = (pin.location.y - PIN_HEIGHT) + 'px';
   userPin.querySelector('img').src = pin.author.avatar;
   userPin.querySelector('img').alt = pin.offer.title;
-
-  // var renderCards = function (card) {
-  //   var element = adTemplate.cloneNode(true);
-  //   element.querySelector('.popup__title').textContent = card.offer.title;
-  //   return card;
-  // };
-
   return userPin;
 };
 
+// var renderCards = function (card) {
+//   var element = adTemplate.cloneNode(true);
+//   var popupTitle = element.querySelector('.popup__title');
+//   // element.querySelector('.popup__title').textContent = card.offer.title;
+//   // console.log(card.offer);
+//   // return element;
+// };
 
 var drawPins = function (array) {
   var fragment = document.createDocumentFragment();
@@ -150,20 +151,20 @@ mainPin.addEventListener('keydown', function (evt) {
   }
 });
 
-mainPin.addEventListener('mouseup', function (evt) {
+mainPin.addEventListener('mousedown', function (evt) {
   if (evt.button === MOUSE_KEY) {
     activateMap();
   }
 });
 
-var getPinCoords = function (pin, objectInput) {
-  objectInput.value = Math.floor((parseInt(pin.style.left, 10) + pin.offsetWidth / 2)) + ', ' + Math.floor((parseInt(pin.style.top, 10) + pin.offsetHeight + MAINPIN_HEIGHT - TRANSLATE_X));
-  return objectInput;
+var getPinCoords = function (pin, address) {
+  address.value = Math.floor((parseInt(pin.style.left, 10) + pin.offsetWidth / 2)) + ', ' + Math.floor((parseInt(pin.style.top, 10) + pin.offsetHeight + MAINPIN_HEIGHT - TRANSLATE_X));
+  return address;
 };
 
-var setAddress = function (objectInput) {
+var setAddress = function (address) {
   if (map.classList.contains('map--faded')) {
-    objectInput.value = Math.floor(mainPin.offsetLeft + mainPin.clientWidth / 2) + ', ' + Math.floor(mainPin.offsetTop + mainPin.clientHeight / 2);
+    address.value = Math.floor(mainPin.offsetLeft + mainPin.clientWidth / 2) + ', ' + Math.floor(mainPin.offsetTop + mainPin.clientHeight / 2);
   } else {
     getPinCoords(mainPin, mainPinAddressInput);
   }
