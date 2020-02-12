@@ -16,12 +16,10 @@ var Prices = {
   MINIMUM: 15,
   MAXIMUM: 200
 };
-// var PRICE_MAX = 1000000;
 var ENTER_KEY = 13;
 var map = document.querySelector('.map');
 var pins = document.querySelector('.map__pins');
 var template = document.querySelector('#pin').content.querySelector('.map__pin');
-// var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
 var propertyTypes = ['palace', 'flat', 'house', 'bungalo'];
 var propertyFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var propertyPhotos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
@@ -30,6 +28,15 @@ var mainPin = document.querySelector('.map__pin--main');
 var fieldsets = document.querySelectorAll('fieldset');
 var mapFilters = document.querySelectorAll('select[class=map__filter]');
 var form = document.querySelector('.ad-form');
+var mainPinLeft = parseInt(mainPin.style.left, 10);
+var mainPinTop = parseInt(mainPin.style.top, 10);
+var pinOffsetWidth = mainPin.offsetWidth / 2;
+var pinOffsetHeight = mainPin.offsetHeight + MAINPIN_HEIGHT - TRANSLATE_X;
+var pinOffsetLeft = mainPin.offsetLeft;
+var pinClientWidth = mainPin.clientWidth / 2;
+var pinOffsetTop = mainPin.offsetTop;
+var pinClientHeight = mainPin.clientHeight / 2;
+// var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
 // var filter = map.querySelector('.map__filters-container');
 // var reset = document.querySelector('.ad-form__reset');
 //
@@ -159,9 +166,9 @@ mainPin.addEventListener('mousedown', function (evt) {
 
 var setAddress = function (address) {
   if (map.classList.contains('map--faded')) {
-    address.value = Math.floor(mainPin.offsetLeft + mainPin.clientWidth / 2) + ', ' + Math.floor(mainPin.offsetTop + mainPin.clientHeight / 2);
+    address.value = Math.floor(pinOffsetLeft + pinClientWidth) + ', ' + Math.floor(pinOffsetTop + pinClientHeight);
   } else {
-    address.value = Math.floor(parseInt(mainPin.style.left, 10) + mainPin.offsetWidth / 2) + ', ' + Math.floor(parseInt(mainPin.style.top, 10) + mainPin.offsetHeight + MAINPIN_HEIGHT - TRANSLATE_X);
+    address.value = Math.floor(mainPinLeft + pinOffsetWidth) + ', ' + Math.floor(mainPinTop + pinOffsetHeight);
   }
 };
 
