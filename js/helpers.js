@@ -33,12 +33,19 @@
     return selectedOption;
   };
 
+  var changeMapState = function (object, newState) {
+    for (var i = 0; i < object.length; i++) {
+      object[i].disabled = newState;
+    }
+  };
+
   window.helpers = {
     getRandomArray: getRandomArray,
     getRandomInteger: getRandomInteger,
     getRandomNumber: getRandomNumber,
     getRandomElement: getRandomElement,
-    getSelectedOption: getSelectedOption
+    getSelectedOption: getSelectedOption,
+    changeMapState: changeMapState
   };
 
 })();

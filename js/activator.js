@@ -22,20 +22,14 @@
     window.data.map.classList.remove('map--faded');
   };
 
-  var changeMapState = function (object, newState) {
-    for (var i = 0; i < object.length; i++) {
-      object[i].disabled = newState;
-    }
-  };
-
-  changeMapState(fieldsets, true);
-  changeMapState(mapFilters, true);
+  window.helpers.changeMapState(fieldsets, true);
+  window.helpers.changeMapState(mapFilters, true);
 
   var isActivated = false;
   var activateMap = function () {
     unfadeMap();
-    changeMapState(fieldsets, false);
-    changeMapState(mapFilters, false);
+    window.helpers.changeMapState(fieldsets, false);
+    window.helpers.changeMapState(mapFilters, false);
     if (!isActivated) {
       window.data.drawPins(window.data.generateObjects(8));
       isActivated = true;
