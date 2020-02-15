@@ -86,8 +86,29 @@
     pins.appendChild(fragment);
   };
 
-  window.data = {
-    map: map,
+  // var successHandler = function (data) {
+  //   var ads = data;
+  //   drawPins(ads);
+  //   console.log(ads);
+  // };
+
+  // var errorHandler = function (errorMessage) {
+  //   var node = document.createElement('div');
+  //   node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+  //   node.style.position = 'absolute';
+  //   node.style.left = 0;
+  //   node.style.right = 0;
+  //   node.style.fontSize = '30px';
+  //
+  //   node.textContent = errorMessage;
+  //   document.body.insertAdjacentElement('afterbegin', node);
+  // };
+  //
+  // URL = 'https:js.dump.academy/keksobooking/data';
+  //
+  // window.backend.load(URL, successHandler, errorHandler);
+
+  window.pinRender = {
     drawPins: drawPins,
     generateObjects: generateObjects
   };

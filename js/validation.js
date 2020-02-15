@@ -21,8 +21,7 @@
   };
 
   window.validation = {
-    checkCapacity: checkCapacity,
-    capacity: capacity
+    checkCapacity: checkCapacity
   };
 
 })();
