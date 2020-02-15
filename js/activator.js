@@ -23,6 +23,23 @@
     map.classList.remove('map--faded');
   };
 
+  var successHandler = function (data) {
+    var ads = data;
+    window.pinRender.drawPins(ads);
+  };
+
+  var errorHandler = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
   window.helpers.changeMapState(fieldsets, true);
   window.helpers.changeMapState(mapFilters, true);
 
@@ -32,8 +49,7 @@
     window.helpers.changeMapState(fieldsets, false);
     window.helpers.changeMapState(mapFilters, false);
     if (!isActivated) {
-      // window.data.drawPins(window.backend.load);
-      window.pinRender.drawPins(window.pinRender.generateObjects(8));
+      window.backend.load(URL, successHandler, errorHandler);
       isActivated = true;
     }
     adForm.classList.remove('ad-form--disabled');

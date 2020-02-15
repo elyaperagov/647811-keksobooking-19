@@ -1,25 +1,7 @@
 'use strict';
 (function () {
-  var Rooms = {
-    MINIMUM: 1,
-    MAXIMUM: 10
-  };
-  var Guests = {
-    MINIMUM: 1,
-    MAXIMUM: 10
-  };
-  var Prices = {
-    MINIMUM: 15,
-    MAXIMUM: 200
-  };
-  var CHECKIN_TIMES = ['12:00', '13:00', '14:00'];
-  var CHECKOUT_TIMES = ['12:00', '13:00', '14:00'];
-  var map = document.querySelector('.map');
   var pins = document.querySelector('.map__pins');
   var template = document.querySelector('#pin').content.querySelector('.map__pin');
-  var propertyTypes = ['palace', 'flat', 'house', 'bungalo'];
-  var propertyFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  var propertyPhotos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
   // var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
   // var filter = map.querySelector('.map__filters-container');
   // var reset = document.querySelector('.ad-form__reset');
@@ -27,36 +9,6 @@
   // reset.addEventListener('click', function () {
   //   form.reset();
   // });
-
-  var generateObjects = function (quantity) {
-    var offers = [];
-    for (var i = 0; i < quantity; i++) {
-      offers.push({
-        'author': {
-          'avatar': 'img/avatars/user0' + (i + 1) + '.png'
-        },
-        'offer': {
-          'title': 'заголовок предложения',
-          'address': window.helpers.getRandomNumber(map.clientWidth) + ', ' + window.helpers.getRandomInteger(130, 630),
-          'price': window.helpers.getRandomInteger(Prices.MINIMUM, Prices.MAXIMUM),
-          'type': window.helpers.getRandomElement(propertyTypes),
-          'rooms': window.helpers.getRandomInteger(Rooms.MINIMUM, Rooms.MAXIMUM),
-          'guests': window.helpers.getRandomInteger(Guests.MINIMUM, Guests.MAXIMUM),
-          'CHECKIN_TIMES': window.helpers.getRandomElement(CHECKIN_TIMES),
-          'CHECKOUT_TIMES': window.helpers.getRandomElement(CHECKOUT_TIMES),
-          'features': window.helpers.getRandomArray(propertyFeatures),
-          'description': 'строка с описанием',
-          'photos': window.helpers.getRandomArray(propertyPhotos)
-        },
-        'location': {
-          'x': window.helpers.getRandomNumber(map.clientWidth),
-          'y': window.helpers.getRandomInteger(130, 630)
-        }
-      });
-    }
-    return offers;
-  };
-
 
   var renderTemplate = function (pin) {
     var PIN_WIDTH = 50;
@@ -86,30 +38,7 @@
     pins.appendChild(fragment);
   };
 
-  // var successHandler = function (data) {
-  //   var ads = data;
-  //   drawPins(ads);
-  //   console.log(ads);
-  // };
-
-  // var errorHandler = function (errorMessage) {
-  //   var node = document.createElement('div');
-  //   node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-  //   node.style.position = 'absolute';
-  //   node.style.left = 0;
-  //   node.style.right = 0;
-  //   node.style.fontSize = '30px';
-  //
-  //   node.textContent = errorMessage;
-  //   document.body.insertAdjacentElement('afterbegin', node);
-  // };
-  //
-  // URL = 'https:js.dump.academy/keksobooking/data';
-  //
-  // window.backend.load(URL, successHandler, errorHandler);
-
   window.pinRender = {
-    drawPins: drawPins,
-    generateObjects: generateObjects
+    drawPins: drawPins
   };
 })();
