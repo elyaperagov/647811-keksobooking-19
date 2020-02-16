@@ -38,7 +38,7 @@
     pins.appendChild(fragment);
   };
 
-  window.pinRender = {
+  window.data = {
     drawPins: drawPins
   };
 })();

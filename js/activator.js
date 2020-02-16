@@ -24,8 +24,7 @@
   };
 
   var successHandler = function (data) {
-    var ads = data;
-    window.pinRender.drawPins(ads);
+    window.data.drawPins(data);
   };
 
   var errorHandler = function (errorMessage) {
