@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var ESC_KEYCODE = 27;
   var getRandomArray = function (arr) {
     var number = getRandomInteger(1, arr.length);
     var arrItems = [];
@@ -38,13 +39,20 @@
     }
   };
 
+  var isEscEvent = function (evt, arg) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      arg();
+    }
+  };
+
   window.helpers = {
     getRandomArray: getRandomArray,
     getRandomInteger: getRandomInteger,
     getRandomNumber: getRandomNumber,
     getRandomElement: getRandomElement,
     getSelectedOption: getSelectedOption,
-    changeMapState: changeMapState
+    changeMapState: changeMapState,
+    isEscEvent: isEscEvent
   };
 
 })();
