@@ -4,7 +4,6 @@
   var ALL_PRICES = [0, 1000, 5000, 10000];
   var main = document.querySelector('main');
   var map = document.querySelector('.map');
-  var mapPins = document.querySelector('.map__pins');
   var form = document.querySelector('.ad-form');
   var price = form.querySelector('#price');
   var houseType = form.querySelector('#type');
