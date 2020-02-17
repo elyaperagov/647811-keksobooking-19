@@ -1,6 +1,5 @@
 'use strict';
 (function () {
-
   var getRandomArray = function (arr) {
     var number = getRandomInteger(1, arr.length);
     var arrItems = [];
