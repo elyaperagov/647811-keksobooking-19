@@ -14,6 +14,7 @@
   var reset = document.querySelector('.ad-form__reset');
   var fieldsets = document.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('select[class=map__filter]');
+  var mainPinAddressInput = document.querySelector('#address');
 
   var setOptions = function (evt) {
     if (evt.target === houseType) {
@@ -45,10 +46,11 @@
         form.classList.add('ad-form--disabled');
         window.helpers.changeMapState(fieldsets, true);
         window.helpers.changeMapState(mapFilters, true);
-        var pinElements = document.querySelectorAll('button[type=button]');
+        var pinElements = map.querySelectorAll('button[type=button]');
         pinElements.forEach(function (element) {
           element.remove();
         });
+        window.activator.setAddress(mainPinAddressInput);
       }
       document.removeEventListener('click', successClickHandler);
       document.removeEventListener('keydown', succesKeydownHandler);
@@ -58,6 +60,7 @@
       window.helpers.isEscEvent(evt, successClickHandler);
     };
     document.addEventListener('keydown', succesKeydownHandler);
+    window.activator.isActivated = false;
   };
 
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
@@ -72,7 +75,6 @@
       document.removeEventListener('click', closeError);
       document.removeEventListener('keydown', errorKeydownHandler);
     };
-
     document.addEventListener('click', closeError);
     var errorKeydownHandler = function (evt) {
       window.helpers.isEscEvent(evt, closeError);

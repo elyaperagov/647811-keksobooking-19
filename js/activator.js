@@ -53,6 +53,7 @@
     }
     adForm.classList.remove('ad-form--disabled');
     setAddress(mainPinAddressInput);
+    isActivated = false;
   };
 
   mainPin.addEventListener('keydown', function (evt) {
@@ -77,5 +78,10 @@
   };
 
   setAddress(mainPinAddressInput);
+
+  window.activator = {
+    isActivated: isActivated,
+    setAddress: setAddress
+  };
 
 })();
