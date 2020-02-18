@@ -4,6 +4,7 @@
   var MOUSE_KEY = 0;
   var MAINPIN_HEIGHT = 22;
   var TRANSLATE_X = 6;
+  var main = document.querySelector('main');
   var mainPinAddressInput = document.querySelector('#address');
   var mainPin = document.querySelector('.map__pin--main');
   var mainPinLeft = parseInt(mainPin.style.left, 10);
@@ -18,6 +19,9 @@
   var pinClientWidth = mainPin.clientWidth / 2;
   var pinOffsetTop = mainPin.offsetTop;
   var pinClientHeight = mainPin.clientHeight / 2;
+  var form = document.querySelector('.ad-form');
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var success = successTemplate.cloneNode(true);
 
   var unfadeMap = function () {
     map.classList.remove('map--faded');
@@ -77,11 +81,40 @@
     }
   };
 
+  var removePins = function () {
+    var pinElements = map.querySelectorAll('button[type=button]');
+    pinElements.forEach(function (element) {
+      element.remove();
+    });
+  };
+
+  var successClickHandler = function () {
+    if (success) {
+      main.lastChild.remove();
+      // main.removeChild(success); success не является ребенком main?
+      form.reset();
+      map.classList.add('map--faded');
+      form.classList.add('ad-form--disabled');
+      window.helpers.changeMapState(fieldsets, true);
+      window.helpers.changeMapState(mapFilters, true);
+      window.activator.setAddress(mainPinAddressInput);
+      removePins();
+    }
+    document.removeEventListener('click', successClickHandler);
+    document.removeEventListener('keydown', successKeydownHandler);
+  };
+
+  var successKeydownHandler = function (evt) {
+    window.helpers.isEscEvent(evt, successClickHandler);
+  };
+
   setAddress(mainPinAddressInput);
 
   window.activator = {
     isActivated: isActivated,
-    setAddress: setAddress
+    setAddress: setAddress,
+    successClickHandler: successClickHandler,
+    successKeydownHandler: successKeydownHandler
   };
 
 })();
