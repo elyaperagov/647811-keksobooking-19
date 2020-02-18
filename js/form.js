@@ -13,6 +13,8 @@
   var reset = document.querySelector('.ad-form__reset');
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
   var success = successTemplate.cloneNode(true);
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  var error = errorTemplate.cloneNode(true);
 
   var setOptions = function (evt) {
     if (evt.target === houseType) {
@@ -38,23 +40,10 @@
     window.activator.isActivated = false;
   };
 
-  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-
   var openError = function () {
-    var error = errorTemplate.cloneNode(true);
     main.appendChild(error);
-    var closeError = function () {
-      if (error) {
-        main.removeChild(error);
-      }
-      document.removeEventListener('click', closeError);
-      document.removeEventListener('keydown', errorKeydownHandler);
-    };
-    document.addEventListener('click', closeError);
-    var errorKeydownHandler = function (evt) {
-      window.helpers.isEscEvent(evt, closeError);
-    };
-    document.addEventListener('keydown', errorKeydownHandler);
+    document.addEventListener('click', window.activator.errorClickHandler);
+    document.addEventListener('keydown', window.activator.errorKeydownHandler);
   };
 
   form.addEventListener('submit', function (evt) {

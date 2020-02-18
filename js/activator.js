@@ -22,6 +22,8 @@
   var form = document.querySelector('.ad-form');
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
   var success = successTemplate.cloneNode(true);
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  var error = errorTemplate.cloneNode(true);
 
   var unfadeMap = function () {
     map.classList.remove('map--faded');
@@ -108,13 +110,27 @@
     window.helpers.isEscEvent(evt, successClickHandler);
   };
 
+  var errorClickHandler = function () {
+    if (error) {
+      main.lastChild.remove();
+    }
+    document.removeEventListener('click', errorClickHandler);
+    document.removeEventListener('keydown', errorKeydownHandler);
+  };
+
+  var errorKeydownHandler = function (evt) {
+    window.helpers.isEscEvent(evt, errorClickHandler);
+  };
+
   setAddress(mainPinAddressInput);
 
   window.activator = {
     isActivated: isActivated,
     setAddress: setAddress,
     successClickHandler: successClickHandler,
-    successKeydownHandler: successKeydownHandler
+    successKeydownHandler: successKeydownHandler,
+    errorClickHandler: errorClickHandler,
+    errorKeydownHandler: errorKeydownHandler
   };
 
 })();
