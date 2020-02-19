@@ -37,7 +37,6 @@
     main.appendChild(success);
     document.addEventListener('click', window.activator.successClickHandler);
     document.addEventListener('keydown', window.activator.successKeydownHandler);
-    window.activator.isActivated = false;
   };
 
   var openError = function () {

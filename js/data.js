@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var map = document.querySelector('.map');
   var pins = document.querySelector('.map__pins');
   var template = document.querySelector('#pin').content.querySelector('.map__pin');
   // var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
@@ -33,7 +34,15 @@
     pins.appendChild(fragment);
   };
 
+  var removePins = function () {
+    var pinElements = map.querySelectorAll('button[type=button]');
+    pinElements.forEach(function (element) {
+      element.remove();
+    });
+  };
+
   window.data = {
-    drawPins: drawPins
+    drawPins: drawPins,
+    removePins: removePins
   };
 })();
