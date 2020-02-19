@@ -52,8 +52,19 @@
     window.backend.send(new FormData(form), openSuccess, openError);
   });
 
-  reset.addEventListener('click', function () {
+  var formReset = function () {
     form.reset();
-  });
+  };
+
+  var clearForm = function () {
+    formReset();
+    form.classList.add('ad-form--disabled');
+  };
+
+  reset.addEventListener('click', formReset);
+
+  window.form = {
+    clearForm: clearForm
+  };
 
 })();

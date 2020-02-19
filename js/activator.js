@@ -13,17 +13,6 @@
   var mapFilters = document.querySelectorAll('select[class=map__filter]');
   var adForm = document.querySelector('.ad-form');
   var map = document.querySelector('.map');
-  var pinOffsetWidth = mainPin.offsetWidth / 2;
-  var pinOffsetHeight = mainPin.offsetHeight + MAINPIN_HEIGHT - TRANSLATE_X;
-  var pinOffsetLeft = mainPin.offsetLeft;
-  var pinClientWidth = mainPin.clientWidth / 2;
-  var pinOffsetTop = mainPin.offsetTop;
-  var pinClientHeight = mainPin.clientHeight / 2;
-  var form = document.querySelector('.ad-form');
-  var successTemplate = document.querySelector('#success').content.querySelector('.success');
-  var success = successTemplate.cloneNode(true);
-  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  var error = errorTemplate.cloneNode(true);
 
   var unfadeMap = function () {
     map.classList.remove('map--faded');
@@ -76,6 +65,12 @@
   });
 
   var setAddress = function (address) {
+    var pinOffsetWidth = mainPin.offsetWidth / 2;
+    var pinOffsetHeight = mainPin.offsetHeight + MAINPIN_HEIGHT - TRANSLATE_X;
+    var pinOffsetLeft = mainPin.offsetLeft;
+    var pinClientWidth = mainPin.clientWidth / 2;
+    var pinOffsetTop = mainPin.offsetTop;
+    var pinClientHeight = mainPin.clientHeight / 2;
     if (map.classList.contains('map--faded')) {
       address.value = Math.floor(pinOffsetLeft + pinClientWidth) + ', ' + Math.floor(pinOffsetTop + pinClientHeight);
     } else {
@@ -91,17 +86,14 @@
   };
 
   var successClickHandler = function () {
-    if (success) {
-      main.lastChild.remove();
-      // main.removeChild(success); success не является ребенком main?
-      form.reset();
-      map.classList.add('map--faded');
-      form.classList.add('ad-form--disabled');
-      window.helpers.changeMapState(fieldsets, true);
-      window.helpers.changeMapState(mapFilters, true);
-      window.activator.setAddress(mainPinAddressInput);
-      removePins();
-    }
+    main.lastChild.remove();
+    // main.removeChild(success); success не является ребенком main?
+    map.classList.add('map--faded');
+    window.form.clearForm();
+    window.helpers.changeMapState(fieldsets, true);
+    window.helpers.changeMapState(mapFilters, true);
+    window.activator.setAddress(mainPinAddressInput);
+    removePins();
     document.removeEventListener('click', successClickHandler);
     document.removeEventListener('keydown', successKeydownHandler);
   };
@@ -111,9 +103,7 @@
   };
 
   var errorClickHandler = function () {
-    if (error) {
-      main.lastChild.remove();
-    }
+    main.lastChild.remove();
     document.removeEventListener('click', errorClickHandler);
     document.removeEventListener('keydown', errorKeydownHandler);
   };
