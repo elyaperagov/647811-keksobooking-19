@@ -33,22 +33,22 @@
 
   form.addEventListener('change', setOptions);
 
-  var openSuccess = function () {
+  var addSuccessWindow = function () {
     main.appendChild(success);
-    document.addEventListener('click', window.activator.successClickHandler);
-    document.addEventListener('keydown', window.activator.successKeydownHandler);
+    document.addEventListener('click', window.activator.removeSuccessHandler);
+    document.addEventListener('keydown', window.activator.removeSuccessKeydownHandler);
   };
 
-  var openError = function () {
+  var addErrorWindow = function () {
     main.appendChild(error);
-    document.addEventListener('click', window.activator.errorClickHandler);
-    document.addEventListener('keydown', window.activator.errorKeydownHandler);
+    document.addEventListener('click', window.activator.removeErrorHandler);
+    document.addEventListener('keydown', window.activator.removeErrorKeydownHandler);
   };
 
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
 
-    window.backend.send(new FormData(form), openSuccess, openError);
+    window.backend.send(new FormData(form), addSuccessWindow, addErrorWindow);
   });
 
   var formReset = function () {

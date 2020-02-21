@@ -17,66 +17,69 @@
   window.helpers.changeMapState(fieldsets, true);
   window.helpers.changeMapState(mapFilters, true);
 
-  var activateMap = function (disabled) {
+  var addPins = function (data) {
+    window.data.drawPins(data);
+  };
+
+  var toggle = function (disabled) {
     if (disabled) {
       unfadeMap();
       window.helpers.changeMapState(fieldsets, false);
       window.helpers.changeMapState(mapFilters, false);
-      window.backend.load(URL, window.popups.successHandler, window.popups.errorHandler);
+      window.backend.load(URL, addPins, window.helpers.showErrorMessage);
       adForm.classList.remove('ad-form--disabled');
       window.address.setAddress(mainPinAddressInput);
     } else {
-      return;
+      main.lastChild.remove();
+      map.classList.add('map--faded');
+      window.form.clearForm();
+      window.helpers.changeMapState(fieldsets, true);
+      window.helpers.changeMapState(mapFilters, true);
+      window.address.setAddress(mainPinAddressInput);
+      window.data.removePins();
     }
   };
 
   mainPin.addEventListener('keydown', function (evt) {
     evt.preventDefault();
     if (evt.keyCode === ENTER_KEY) {
-      activateMap(true);
+      toggle(true);
     }
   });
 
   mainPin.addEventListener('mousedown', function (evt) {
     if (evt.button === MOUSE_KEY) {
-      activateMap(true);
+      toggle(true);
     }
   });
 
-  var successClickHandler = function () {
+  var removeSuccessHandler = function () {
+    toggle(false);
+    document.removeEventListener('click', removeSuccessHandler);
+    document.removeEventListener('keydown', removeSuccessHandler);
+  };
+
+  var removeSuccessKeydownHandler = function (evt) {
+    window.helpers.isEscEvent(evt, removeSuccessHandler);
+  };
+
+  var removeErrorHandler = function () {
     main.lastChild.remove();
-    // main.removeChild(success); success не является ребенком main?
-    map.classList.add('map--faded');
-    window.form.clearForm();
-    window.helpers.changeMapState(fieldsets, true);
-    window.helpers.changeMapState(mapFilters, true);
-    window.address.setAddress(mainPinAddressInput);
-    window.data.removePins();
-    document.removeEventListener('click', successClickHandler);
-    document.removeEventListener('keydown', successKeydownHandler);
+    document.removeEventListener('click', removeErrorHandler);
+    document.removeEventListener('keydown', removeErrorKeydownHandler);
   };
 
-  var successKeydownHandler = function (evt) {
-    window.helpers.isEscEvent(evt, successClickHandler);
-  };
-
-  var errorClickHandler = function () {
-    main.lastChild.remove();
-    document.removeEventListener('click', errorClickHandler);
-    document.removeEventListener('keydown', errorKeydownHandler);
-  };
-
-  var errorKeydownHandler = function (evt) {
-    window.helpers.isEscEvent(evt, errorClickHandler);
+  var removeErrorKeydownHandler = function (evt) {
+    window.helpers.isEscEvent(evt, removeErrorHandler);
   };
 
   window.address.setAddress(mainPinAddressInput);
 
   window.activator = {
-    successClickHandler: successClickHandler,
-    successKeydownHandler: successKeydownHandler,
-    errorClickHandler: errorClickHandler,
-    errorKeydownHandler: errorKeydownHandler
+    removeSuccessHandler: removeSuccessHandler,
+    removeSuccessKeydownHandler: removeSuccessKeydownHandler,
+    removeErrorHandler: removeErrorHandler,
+    removeErrorKeydownHandler: removeErrorKeydownHandler
   };
 
 })();
