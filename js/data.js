@@ -1,14 +1,10 @@
 'use strict';
 (function () {
+  var map = document.querySelector('.map');
   var pins = document.querySelector('.map__pins');
   var template = document.querySelector('#pin').content.querySelector('.map__pin');
   // var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
   // var filter = map.querySelector('.map__filters-container');
-  // var reset = document.querySelector('.ad-form__reset');
-  //
-  // reset.addEventListener('click', function () {
-  //   form.reset();
-  // });
 
   var renderTemplate = function (pin) {
     var PIN_WIDTH = 50;
@@ -38,7 +34,15 @@
     pins.appendChild(fragment);
   };
 
+  var removePins = function () {
+    var pinElements = map.querySelectorAll('button[type=button]');
+    pinElements.forEach(function (element) {
+      element.remove();
+    });
+  };
+
   window.data = {
-    drawPins: drawPins
+    drawPins: drawPins,
+    removePins: removePins
   };
 })();

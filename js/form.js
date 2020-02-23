@@ -2,6 +2,7 @@
 (function () {
   var BOOKING_TIMES = ['12:00', '13:00', '14:00'];
   var ALL_PRICES = [0, 1000, 5000, 10000];
+  var main = document.querySelector('main');
   var form = document.querySelector('.ad-form');
   var price = form.querySelector('#price');
   var houseType = form.querySelector('#type');
@@ -9,6 +10,11 @@
   var timeOut = form.querySelector('#timeout');
   var roomNumber = form.querySelector('#room_number');
   var capacity = form.querySelector('#capacity');
+  var reset = document.querySelector('.ad-form__reset');
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var success = successTemplate.cloneNode(true);
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  var error = errorTemplate.cloneNode(true);
 
   var setOptions = function (evt) {
     if (evt.target === houseType) {
@@ -26,5 +32,38 @@
   };
 
   form.addEventListener('change', setOptions);
+
+  var addSuccessWindow = function () {
+    main.appendChild(success);
+    document.addEventListener('click', window.activator.removeSuccessHandler);
+    document.addEventListener('keydown', window.activator.removeSuccessKeydownHandler);
+  };
+
+  var addErrorWindow = function () {
+    main.appendChild(error);
+    document.addEventListener('click', window.activator.removeErrorHandler);
+    document.addEventListener('keydown', window.activator.removeErrorKeydownHandler);
+  };
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    window.backend.send(new FormData(form), addSuccessWindow, addErrorWindow);
+  });
+
+  var formReset = function () {
+    form.reset();
+  };
+
+  var clearForm = function () {
+    formReset();
+    form.classList.add('ad-form--disabled');
+  };
+
+  reset.addEventListener('click', formReset);
+
+  window.form = {
+    clearForm: clearForm
+  };
 
 })();
