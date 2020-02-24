@@ -4,7 +4,6 @@
   var pins = document.querySelector('.map__pins');
   var template = document.querySelector('#pin').content.querySelector('.map__pin');
 
-
   var renderTemplate = function (pin) {
     var PIN_WIDTH = 50;
     var PIN_HEIGHT = 70;
@@ -17,13 +16,24 @@
     return userPin;
   };
 
+  // var allPins = document.querySelectorAll('button[type=button]');
+  //
+  // var addCards = function (fragment, array, arr) {
+  //   for (var i = 0; i < array.length; i++) {
+  //     array[i].addEventListener('click', function () {
+  //       // fragment.appendChild(window.card.renderCards(arr[i]));
+  //       console.log(array[i]);
+  //     });
+  //   }
+  // }
 
   var drawPins = function (array) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < array.length; i++) {
       fragment.appendChild(renderTemplate(array[i]));
+      fragment.appendChild(window.card.renderCards(array[0]));
+      // addCards(fragment, allPins, array);
     }
-    fragment.appendChild(window.card.renderCards(array[0]));
     pins.appendChild(fragment);
   };
 
