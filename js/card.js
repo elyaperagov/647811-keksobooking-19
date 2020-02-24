@@ -26,48 +26,32 @@
   //   'conditioner': 'popup__feature--conditioner'
   // }; !! СПРОСИТЬ КАК ПРОЧИТАТЬ ЗНАЧЕНИЕ ИЗ ЭТОГО ОБЪЕКТА И ДОБАВИТЬ В card.offer.features!!!
 
-  var getFeaturesClass = function (feature) {
-    switch (feature) {
-      case 'wifi':
-        return 'popup__feature--wifi';
-      case 'dishwasher':
-        return 'popup__feature--dishwasher';
-      case 'parking':
-        return 'popup__feature--parking';
-      case 'washer':
-        return 'popup__feature--washer';
-      case 'elevator':
-        return 'popup__feature--elevator';
-      case 'conditioner':
-        return 'popup__feature--conditioner';
-      default:
-        throw new Error('Неизвестный тип удобства: «' + feature + '»');
+  var addFeatures = function (node, feature) {
+    var cardFeatures = node.querySelector('.popup__features');
+    cardFeatures.innerHTML = '';
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < feature.length; i++) {
+      var featureItem = document.createElement('li');
+      featureItem.className = 'popup__feature popup__feature--' + feature[i];
+      fragment.appendChild(featureItem);
     }
+    cardFeatures.appendChild(fragment);
   };
 
-  var addFeatures = function (node, features) {
-    var cardFeatures = node.querySelector('.popup__features');
-    cardFeatures.innerHTML = ''; // КАК УДАЛИТЬ ВСЕ ДОЧЕРНИЕ ЭЛЕМЕНТЫ ЧЕРЕЗ removeChild?;
-    for (var i = 0; i < features.length; i++) {
-      var featureItem = document.createElement('li');
-      featureItem.className = 'popup__feature';
-      featureItem.classList.add(getFeaturesClass(features[i]));
-      cardFeatures.appendChild(featureItem);
-    }
-  };
+  var photoTemplate = document.querySelector('#card').content.querySelector('.popup__photo');
 
   var addPhotos = function (node, photos) {
     var popupPhotos = node.querySelector('.popup__photos');
-    popupPhotos.innerHTML = '';
-    for (var i = 0; i < photos.length; i++) {
-      var photoItem = document.createElement('img');
-      photoItem.className = 'popup__photo';
-      photoItem.width = 45;
-      photoItem.height = 40;
-      photoItem.alt = 'Фотография жилья';
-      photoItem.src = photos[i];
-      popupPhotos.appendChild(photoItem);
+    while (popupPhotos.firstChild) {
+      popupPhotos.firstChild.remove();
     }
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < photos.length; i++) {
+      var photoItem = photoTemplate.cloneNode(true);
+      photoItem.src = photos[i];
+      fragment.appendChild(photoItem);
+    }
+    popupPhotos.appendChild(fragment);
   };
 
   var renderCards = function (card) {
@@ -83,7 +67,7 @@
     element.querySelector('.popup__avatar').src = card.author.avatar;
     element.querySelector('.popup__feature').textContent = addFeatures(element, card.offer.features);
     return element;
-    // filter.insertAdjacentHTML('afterbegin', element);
+    // filter.insertAdjacentHTML('afterbegin', element); КАК ПРАВИЛЬНО ВСТАВИТЬ element перед filter
   };
 
   window.card = {
