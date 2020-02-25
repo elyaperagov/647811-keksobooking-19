@@ -3,8 +3,6 @@
   var map = document.querySelector('.map');
   var pins = document.querySelector('.map__pins');
   var template = document.querySelector('#pin').content.querySelector('.map__pin');
-  // var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
-  // var filter = map.querySelector('.map__filters-container');
 
   var renderTemplate = function (pin) {
     var PIN_WIDTH = 50;
@@ -18,18 +16,23 @@
     return userPin;
   };
 
-  // var renderCards = function (card) {
-  //   var element = adTemplate.cloneNode(true);
-  //   var popupTitle = element.querySelector('.popup__title');
-  //   // element.querySelector('.popup__title').textContent = card.offer.title;
-  //   // console.log(card.offer);
-  //   // return element;
-  // };
+  // var allPins = document.querySelectorAll('button[type=button]');
+  //
+  // var addCards = function (fragment, array, arr) {
+  //   for (var i = 0; i < array.length; i++) {
+  //     array[i].addEventListener('click', function () {
+  //       // fragment.appendChild(window.card.renderCards(arr[i]));
+  //       console.log(array[i]);
+  //     });
+  //   }
+  // }
 
   var drawPins = function (array) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < array.length; i++) {
       fragment.appendChild(renderTemplate(array[i]));
+      fragment.appendChild(window.card.renderCards(array[0]));
+      // addCards(fragment, allPins, array);
     }
     pins.appendChild(fragment);
   };
