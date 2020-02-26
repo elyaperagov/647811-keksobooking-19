@@ -1,7 +1,9 @@
 'use strict';
 (function () {
+  var map = document.querySelector('.map');
   var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
   // var filter = document.querySelector('.map__filters-container');
+
   var getHouseType = function (type) {
     switch (type) {
       case 'flat':
@@ -54,7 +56,15 @@
     popupPhotos.appendChild(fragment);
   };
 
+  var removeOldCard = function () {
+    var oldCard = map.querySelector('.map__card');
+    if (oldCard) {
+      oldCard.remove();
+    }
+  };
+
   var renderCards = function (card) {
+    removeOldCard();
     var element = adTemplate.cloneNode(true);
     element.querySelector('.popup__title').textContent = card.offer.title;
     element.querySelector('.popup__text--address').textContent = card.offer.address;
@@ -66,8 +76,8 @@
     element.querySelector('.popup__photos').src = addPhotos(element, card.offer.photos);
     element.querySelector('.popup__avatar').src = card.author.avatar;
     element.querySelector('.popup__feature').textContent = addFeatures(element, card.offer.features);
-    return element;
-    // filter.insertAdjacentHTML('afterbegin', element); КАК ПРАВИЛЬНО ВСТАВИТЬ element перед filter
+    // return element;
+    map.insertBefore(element, map.querySelector('.map__filters-container'));
   };
 
   window.card = {
