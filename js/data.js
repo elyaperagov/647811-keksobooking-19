@@ -7,15 +7,6 @@
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
 
-  var removePinActiveClass = function () {
-    var allPins = map.querySelectorAll('.map__pin');
-    allPins.forEach(function (it) {
-      if (it.classList.contains('map__pin--active')) {
-        it.classList.remove('map__pin--active');
-      }
-    });
-  };
-
   var drawPins = function (array) {
     array.forEach(function (element) {
       var userPin = template.cloneNode(true);
@@ -25,7 +16,7 @@
       userPin.querySelector('img').alt = element.offer.title;
       pins.appendChild(userPin);
       userPin.addEventListener('click', function () {
-        removePinActiveClass();
+        window.card.removePinActiveClass();
         userPin.classList.add('map__pin--active');
         window.card.renderCards(element);
       });

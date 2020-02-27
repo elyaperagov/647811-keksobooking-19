@@ -20,8 +20,21 @@
     }
   };
 
+  var validateFileType = function (input) {
+    var fileName = input.value;
+    var idxDot = fileName.lastIndexOf('.') + 1;
+    var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+    if (['jpg', 'jpeg', 'png'].includes(extFile)) {
+      input.setCustomValidity('');
+    } else {
+      input.setCustomValidity('Можно загружать только изображение');
+      input.value = '';
+    }
+  };
+
   window.validation = {
-    checkCapacity: checkCapacity
+    checkCapacity: checkCapacity,
+    validateFileType: validateFileType
   };
 
 })();

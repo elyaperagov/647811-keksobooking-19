@@ -14,6 +14,8 @@
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
   var success = successTemplate.cloneNode(true);
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  var imageInput = form.querySelector('.ad-form__input');
+  var imageHeaderInput = form.querySelector('.ad-form-header__input');
   var error = errorTemplate.cloneNode(true);
 
   var setOptions = function (evt) {
@@ -28,6 +30,10 @@
       timeIn.placeholder = timeIn.value;
     } if (evt.target === roomNumber || evt.target === capacity) {
       window.validation.checkCapacity(roomNumber, capacity);
+    } if (evt.target === imageInput) {
+      window.validation.validateFileType(imageInput);
+    } if (evt.target === imageHeaderInput) {
+      window.validation.validateFileType(imageHeaderInput);
     }
   };
 

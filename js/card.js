@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var ESC_KEYCODE = 27;
   var map = document.querySelector('.map');
   var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
   // var filter = document.querySelector('.map__filters-container');
@@ -63,6 +64,20 @@
     }
   };
 
+  var removePinActiveClass = function () {
+    var allPins = map.querySelectorAll('.map__pin');
+    allPins.forEach(function (it) {
+      if (it.classList.contains('map__pin--active')) {
+        it.classList.remove('map__pin--active');
+      }
+    });
+  };
+
+  var closePopup = function () {
+    removeOldCard();
+    removePinActiveClass();
+  };
+
   var renderCards = function (card) {
     removeOldCard();
     var element = adTemplate.cloneNode(true);
@@ -76,11 +91,18 @@
     element.querySelector('.popup__photos').src = addPhotos(element, card.offer.photos);
     element.querySelector('.popup__avatar').src = card.author.avatar;
     element.querySelector('.popup__feature').textContent = addFeatures(element, card.offer.features);
-    // return element;
     map.insertBefore(element, map.querySelector('.map__filters-container'));
+    var popupClose = element.querySelector('.popup__close');
+    popupClose.addEventListener('click', closePopup);
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        closePopup();
+      }
+    });
   };
 
   window.card = {
-    renderCards: renderCards
+    renderCards: renderCards,
+    removePinActiveClass: removePinActiveClass
   };
 })();
