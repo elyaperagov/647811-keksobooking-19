@@ -1,6 +1,5 @@
 'use strict';
 (function () {
-  var ESC_KEYCODE = 27;
   var map = document.querySelector('.map');
   var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
   // var filter = document.querySelector('.map__filters-container');
@@ -67,7 +66,6 @@
     if (oldCard) {
       oldCard.remove();
     }
-    document.removeEventListener('keydown', closePopup);
   };
 
   var removePinActiveClass = function () {
@@ -94,12 +92,15 @@
     element.querySelector('.popup__feature').textContent = addFeatures(element, card.offer.features);
     map.insertBefore(element, map.querySelector('.map__filters-container'));
     var popupClose = element.querySelector('.popup__close');
-    popupClose.addEventListener('click', closePopup); //  где лучше удалять этот обработчик?
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        closePopup();
-      }
-    });
+
+    var cardClickHandler = function () {
+      closePopup();
+      popupClose.removeEventListener('click', cardClickHandler);
+      document.removeEventListener('keydown', cardClickHandler);
+    };
+
+    popupClose.addEventListener('click', cardClickHandler);
+    document.addEventListener('keydown', cardClickHandler);
   };
 
   window.card = {

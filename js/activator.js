@@ -29,6 +29,7 @@
       window.backend.load(URL, addPins, window.helpers.showErrorMessage);
       adForm.classList.remove('ad-form--disabled');
       window.address.setAddress(mainPinAddressInput);
+      // mainPin.removeEventListener('keydown', mainPinKeyDownHandler); // почему нельзя удалить внутри mainPinKeyDownHandler?
     } else {
       main.lastChild.remove();
       map.classList.add('map--faded');
@@ -37,22 +38,30 @@
       window.helpers.changeMapState(mapFilters, true);
       window.address.setAddress(mainPinAddressInput);
       window.data.removePins();
+      mainPin.addEventListener('mousedown', mainPinClickHandler);
+      mainPin.addEventListener('keydown', mainPinKeyDownHandler);
     }
     document.removeEventListener('keydown', removeSuccessKeydownHandler);
   };
 
-  mainPin.addEventListener('keydown', function (evt) {
+  var mainPinKeyDownHandler = function (evt) {
     evt.preventDefault();
     if (evt.keyCode === ENTER_KEY) {
       toggle(true);
     }
-  });
+    mainPin.removeEventListener('keydown', mainPinKeyDownHandler);
+  };
 
-  mainPin.addEventListener('mousedown', function (evt) {
+  mainPin.addEventListener('keydown', mainPinKeyDownHandler);
+
+  var mainPinClickHandler = function (evt) {
     if (evt.button === MOUSE_KEY) {
       toggle(true);
     }
-  });
+    mainPin.removeEventListener('mousedown', mainPinClickHandler);
+  };
+
+  mainPin.addEventListener('mousedown', mainPinClickHandler);
 
   var removeSuccessHandler = function () {
     toggle(false);
