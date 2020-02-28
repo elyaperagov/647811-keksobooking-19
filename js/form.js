@@ -59,6 +59,7 @@
 
   var formReset = function () {
     form.reset();
+    window.card.removeOldCard();
   };
 
   var clearForm = function () {

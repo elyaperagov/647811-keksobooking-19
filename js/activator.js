@@ -38,6 +38,7 @@
       window.address.setAddress(mainPinAddressInput);
       window.data.removePins();
     }
+    document.removeEventListener('keydown', removeSuccessKeydownHandler);
   };
 
   mainPin.addEventListener('keydown', function (evt) {

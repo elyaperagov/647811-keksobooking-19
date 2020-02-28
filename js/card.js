@@ -57,11 +57,17 @@
     popupPhotos.appendChild(fragment);
   };
 
+  var closePopup = function () {
+    removeOldCard();
+    removePinActiveClass();
+  };
+
   var removeOldCard = function () {
     var oldCard = map.querySelector('.map__card');
     if (oldCard) {
       oldCard.remove();
     }
+    document.removeEventListener('keydown', closePopup);
   };
 
   var removePinActiveClass = function () {
@@ -71,11 +77,6 @@
         it.classList.remove('map__pin--active');
       }
     });
-  };
-
-  var closePopup = function () {
-    removeOldCard();
-    removePinActiveClass();
   };
 
   var renderCards = function (card) {
@@ -93,7 +94,7 @@
     element.querySelector('.popup__feature').textContent = addFeatures(element, card.offer.features);
     map.insertBefore(element, map.querySelector('.map__filters-container'));
     var popupClose = element.querySelector('.popup__close');
-    popupClose.addEventListener('click', closePopup);
+    popupClose.addEventListener('click', closePopup); //  где лучше удалять этот обработчик?
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
         closePopup();
@@ -103,6 +104,7 @@
 
   window.card = {
     renderCards: renderCards,
-    removePinActiveClass: removePinActiveClass
+    removePinActiveClass: removePinActiveClass,
+    removeOldCard: removeOldCard
   };
 })();

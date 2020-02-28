@@ -7,21 +7,22 @@
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
 
-  var drawPins = function (array) {
-    array.forEach(function (element) {
+  var drawPins = function (pinArray) {
+    var fragment = document.createDocumentFragment();
+    pinArray.forEach(function (element) {
       var userPin = template.cloneNode(true);
       userPin.style.left = (element.location.x - PIN_WIDTH * 0.5) + 'px';
       userPin.style.top = (element.location.y - PIN_HEIGHT) + 'px';
       userPin.querySelector('img').src = element.author.avatar;
       userPin.querySelector('img').alt = element.offer.title;
-      pins.appendChild(userPin);
+      fragment.appendChild(userPin);
       userPin.addEventListener('click', function () {
         window.card.removePinActiveClass();
         userPin.classList.add('map__pin--active');
         window.card.renderCards(element);
       });
     });
-    // pins.appendChild(fragment);
+    pins.appendChild(fragment);
   };
 
   var removePins = function () {
