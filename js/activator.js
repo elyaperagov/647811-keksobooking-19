@@ -40,8 +40,9 @@
       window.data.removePins();
       mainPin.addEventListener('mousedown', mainPinClickHandler);
       mainPin.addEventListener('keydown', mainPinKeyDownHandler);
+      document.removeEventListener('click', window.form.deActivate);
+      document.removeEventListener('keydown', window.form.deActivate);
     }
-    document.removeEventListener('keydown', removeSuccessKeydownHandler);
   };
 
   var mainPinKeyDownHandler = function (evt) {
@@ -63,33 +64,10 @@
 
   mainPin.addEventListener('mousedown', mainPinClickHandler);
 
-  var removeSuccessHandler = function () {
-    toggle(false);
-    document.removeEventListener('click', removeSuccessHandler);
-    document.removeEventListener('keydown', removeSuccessHandler);
-  };
-
-  var removeSuccessKeydownHandler = function (evt) {
-    window.helpers.isEscEvent(evt, removeSuccessHandler);
-  };
-
-  var removeErrorHandler = function () {
-    main.lastChild.remove();
-    document.removeEventListener('click', removeErrorHandler);
-    document.removeEventListener('keydown', removeErrorKeydownHandler);
-  };
-
-  var removeErrorKeydownHandler = function (evt) {
-    window.helpers.isEscEvent(evt, removeErrorHandler);
-  };
-
   window.address.setAddress(mainPinAddressInput);
 
   window.activator = {
-    removeSuccessHandler: removeSuccessHandler,
-    removeSuccessKeydownHandler: removeSuccessKeydownHandler,
-    removeErrorHandler: removeErrorHandler,
-    removeErrorKeydownHandler: removeErrorKeydownHandler
+    toggle: toggle
   };
 
 })();

@@ -39,16 +39,20 @@
 
   form.addEventListener('change', setOptions);
 
+  var deActivate = function () {
+    window.activator.toggle(false);
+  };
+
   var addSuccessWindow = function () {
     main.appendChild(success);
-    document.addEventListener('click', window.activator.removeSuccessHandler);
-    document.addEventListener('keydown', window.activator.removeSuccessKeydownHandler);
+    document.addEventListener('click', deActivate);
+    document.addEventListener('keydown', deActivate);
   };
 
   var addErrorWindow = function () {
     main.appendChild(error);
-    document.addEventListener('click', window.activator.removeErrorHandler);
-    document.addEventListener('keydown', window.activator.removeErrorKeydownHandler);
+    document.addEventListener('click', deActivate);
+    document.addEventListener('keydown', deActivate);
   };
 
   form.addEventListener('submit', function (evt) {
@@ -70,7 +74,8 @@
   reset.addEventListener('click', formReset);
 
   window.form = {
-    clearForm: clearForm
+    clearForm: clearForm,
+    deActivate: deActivate
   };
 
 })();
