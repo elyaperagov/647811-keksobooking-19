@@ -1,7 +1,9 @@
 'use strict';
 (function () {
+  var map = document.querySelector('.map');
   var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
   // var filter = document.querySelector('.map__filters-container');
+
   var getHouseType = function (type) {
     switch (type) {
       case 'flat':
@@ -54,7 +56,29 @@
     popupPhotos.appendChild(fragment);
   };
 
+  var closePopup = function () {
+    removeOldCard();
+    removePinActiveClass();
+  };
+
+  var removeOldCard = function () {
+    var oldCard = map.querySelector('.map__card');
+    if (oldCard) {
+      oldCard.remove();
+    }
+  };
+
+  var removePinActiveClass = function () {
+    var allPins = map.querySelectorAll('.map__pin');
+    allPins.forEach(function (it) {
+      if (it.classList.contains('map__pin--active')) {
+        it.classList.remove('map__pin--active');
+      }
+    });
+  };
+
   var renderCards = function (card) {
+    removeOldCard();
     var element = adTemplate.cloneNode(true);
     element.querySelector('.popup__title').textContent = card.offer.title;
     element.querySelector('.popup__text--address').textContent = card.offer.address;
@@ -66,11 +90,22 @@
     element.querySelector('.popup__photos').src = addPhotos(element, card.offer.photos);
     element.querySelector('.popup__avatar').src = card.author.avatar;
     element.querySelector('.popup__feature').textContent = addFeatures(element, card.offer.features);
-    return element;
-    // filter.insertAdjacentHTML('afterbegin', element); КАК ПРАВИЛЬНО ВСТАВИТЬ element перед filter
+    map.insertBefore(element, map.querySelector('.map__filters-container'));
+    var popupClose = element.querySelector('.popup__close');
+
+    var cardClickHandler = function () {
+      closePopup();
+      popupClose.removeEventListener('click', cardClickHandler);
+      document.removeEventListener('keydown', cardClickHandler);
+    };
+
+    popupClose.addEventListener('click', cardClickHandler);
+    document.addEventListener('keydown', cardClickHandler);
   };
 
   window.card = {
-    renderCards: renderCards
+    renderCards: renderCards,
+    removePinActiveClass: removePinActiveClass,
+    removeOldCard: removeOldCard
   };
 })();

@@ -23,13 +23,6 @@
 
   var toggle = function (disabled) {
     if (disabled) {
-      unfadeMap();
-      window.helpers.changeMapState(fieldsets, false);
-      window.helpers.changeMapState(mapFilters, false);
-      window.backend.load(URL, addPins, window.helpers.showErrorMessage);
-      adForm.classList.remove('ad-form--disabled');
-      window.address.setAddress(mainPinAddressInput);
-    } else {
       main.lastChild.remove();
       map.classList.add('map--faded');
       window.form.clearForm();
@@ -37,49 +30,44 @@
       window.helpers.changeMapState(mapFilters, true);
       window.address.setAddress(mainPinAddressInput);
       window.data.removePins();
+      mainPin.addEventListener('mousedown', mainPinClickHandler);
+      mainPin.addEventListener('keydown', mainPinKeyDownHandler);
+      document.removeEventListener('click', window.form.deActivate);
+      document.removeEventListener('keydown', window.form.deActivate);
+    } else {
+      unfadeMap();
+      window.helpers.changeMapState(fieldsets, false);
+      window.helpers.changeMapState(mapFilters, false);
+      window.backend.load(URL, addPins, window.helpers.showErrorMessage);
+      adForm.classList.remove('ad-form--disabled');
+      window.address.setAddress(mainPinAddressInput);
+      // mainPin.removeEventListener('keydown', mainPinKeyDownHandler); // почему нельзя удалить внутри mainPinKeyDownHandler?
     }
   };
 
-  mainPin.addEventListener('keydown', function (evt) {
+  var mainPinKeyDownHandler = function (evt) {
     evt.preventDefault();
     if (evt.keyCode === ENTER_KEY) {
-      toggle(true);
+      toggle(false);
     }
-  });
+    mainPin.removeEventListener('keydown', mainPinKeyDownHandler);
+  };
 
-  mainPin.addEventListener('mousedown', function (evt) {
+  mainPin.addEventListener('keydown', mainPinKeyDownHandler);
+
+  var mainPinClickHandler = function (evt) {
     if (evt.button === MOUSE_KEY) {
-      toggle(true);
+      toggle(false);
     }
-  });
-
-  var removeSuccessHandler = function () {
-    toggle(false);
-    document.removeEventListener('click', removeSuccessHandler);
-    document.removeEventListener('keydown', removeSuccessHandler);
+    mainPin.removeEventListener('mousedown', mainPinClickHandler);
   };
 
-  var removeSuccessKeydownHandler = function (evt) {
-    window.helpers.isEscEvent(evt, removeSuccessHandler);
-  };
-
-  var removeErrorHandler = function () {
-    main.lastChild.remove();
-    document.removeEventListener('click', removeErrorHandler);
-    document.removeEventListener('keydown', removeErrorKeydownHandler);
-  };
-
-  var removeErrorKeydownHandler = function (evt) {
-    window.helpers.isEscEvent(evt, removeErrorHandler);
-  };
+  mainPin.addEventListener('mousedown', mainPinClickHandler);
 
   window.address.setAddress(mainPinAddressInput);
 
   window.activator = {
-    removeSuccessHandler: removeSuccessHandler,
-    removeSuccessKeydownHandler: removeSuccessKeydownHandler,
-    removeErrorHandler: removeErrorHandler,
-    removeErrorKeydownHandler: removeErrorKeydownHandler
+    toggle: toggle
   };
 
 })();
