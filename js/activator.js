@@ -23,14 +23,6 @@
 
   var toggle = function (disabled) {
     if (disabled) {
-      unfadeMap();
-      window.helpers.changeMapState(fieldsets, false);
-      window.helpers.changeMapState(mapFilters, false);
-      window.backend.load(URL, addPins, window.helpers.showErrorMessage);
-      adForm.classList.remove('ad-form--disabled');
-      window.address.setAddress(mainPinAddressInput);
-      // mainPin.removeEventListener('keydown', mainPinKeyDownHandler); // почему нельзя удалить внутри mainPinKeyDownHandler?
-    } else {
       main.lastChild.remove();
       map.classList.add('map--faded');
       window.form.clearForm();
@@ -42,13 +34,21 @@
       mainPin.addEventListener('keydown', mainPinKeyDownHandler);
       document.removeEventListener('click', window.form.deActivate);
       document.removeEventListener('keydown', window.form.deActivate);
+    } else {
+      unfadeMap();
+      window.helpers.changeMapState(fieldsets, false);
+      window.helpers.changeMapState(mapFilters, false);
+      window.backend.load(URL, addPins, window.helpers.showErrorMessage);
+      adForm.classList.remove('ad-form--disabled');
+      window.address.setAddress(mainPinAddressInput);
+      // mainPin.removeEventListener('keydown', mainPinKeyDownHandler); // почему нельзя удалить внутри mainPinKeyDownHandler?
     }
   };
 
   var mainPinKeyDownHandler = function (evt) {
     evt.preventDefault();
     if (evt.keyCode === ENTER_KEY) {
-      toggle(true);
+      toggle(false);
     }
     mainPin.removeEventListener('keydown', mainPinKeyDownHandler);
   };
@@ -57,7 +57,7 @@
 
   var mainPinClickHandler = function (evt) {
     if (evt.button === MOUSE_KEY) {
-      toggle(true);
+      toggle(false);
     }
     mainPin.removeEventListener('mousedown', mainPinClickHandler);
   };

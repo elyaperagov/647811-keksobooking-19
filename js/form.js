@@ -40,7 +40,7 @@
   form.addEventListener('change', setOptions);
 
   var deActivate = function () {
-    window.activator.toggle(false);
+    window.activator.toggle(true);
   };
 
   var addSuccessWindow = function () {
