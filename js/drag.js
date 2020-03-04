@@ -3,12 +3,12 @@
   var map = document.querySelector('.map__overlay');
   var mainPin = document.querySelector('.map__pin--main');
   var mainPinAddressInput = document.querySelector('#address');
-  var topLimit = 130;
-  var bottomLimit = 630;
-  var limits = {
-    top: topLimit,
+  var TOP_LIMIT = 130;
+  var BOTTOM_LIMIT = 630;
+  var MAP_LIMITS = {
+    top: TOP_LIMIT,
     right: map.offsetWidth + map.offsetLeft - mainPin.offsetWidth,
-    bottom: bottomLimit,
+    bottom: BOTTOM_LIMIT,
     left: map.offsetLeft
   };
 
@@ -37,10 +37,10 @@
         y: moveEvt.clientY
       };
 
-      if (((mainPin.offsetLeft - shift.x) <= limits.right) && ((mainPin.offsetLeft - shift.x) >= limits.left)) {
+      if (((mainPin.offsetLeft - shift.x) <= MAP_LIMITS.right) && ((mainPin.offsetLeft - shift.x) >= MAP_LIMITS.left)) {
         mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
       }
-      if (((mainPin.offsetTop - shift.y) <= limits.bottom) && ((mainPin.offsetTop - shift.y) >= limits.top)) {
+      if (((mainPin.offsetTop - shift.y) <= MAP_LIMITS.bottom) && ((mainPin.offsetTop - shift.y) >= MAP_LIMITS.top)) {
         mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
       }
 
