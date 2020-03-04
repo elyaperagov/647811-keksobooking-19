@@ -5,7 +5,7 @@
   var mainPinAddressInput = document.querySelector('#address');
   var TOP_LIMIT = 130;
   var BOTTOM_LIMIT = 630;
-  var MAP_LIMITS = {
+  var mapLimit = {
     top: TOP_LIMIT,
     right: map.offsetWidth + map.offsetLeft - mainPin.offsetWidth,
     bottom: BOTTOM_LIMIT,
@@ -37,10 +37,10 @@
         y: moveEvt.clientY
       };
 
-      if (((mainPin.offsetLeft - shift.x) <= MAP_LIMITS.right) && ((mainPin.offsetLeft - shift.x) >= MAP_LIMITS.left)) {
+      if (((mainPin.offsetLeft - shift.x) <= mapLimit.right) && ((mainPin.offsetLeft - shift.x) >= mapLimit.left)) {
         mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
       }
-      if (((mainPin.offsetTop - shift.y) <= MAP_LIMITS.bottom) && ((mainPin.offsetTop - shift.y) >= MAP_LIMITS.top)) {
+      if (((mainPin.offsetTop - shift.y) <= mapLimit.bottom) && ((mainPin.offsetTop - shift.y) >= mapLimit.top)) {
         mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
       }
 
