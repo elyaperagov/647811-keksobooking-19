@@ -9,7 +9,6 @@
   var adForm = document.querySelector('.ad-form');
   var map = document.querySelector('.map');
   var mainPin = document.querySelector('.map__pin--main');
-
   var unfadeMap = function () {
     map.classList.remove('map--faded');
   };
