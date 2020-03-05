@@ -16,10 +16,6 @@
   window.helpers.changeMapState(fieldsets, true);
   window.helpers.changeMapState(mapFilters, true);
 
-  var addPins = function (data) {
-    window.data.drawPins(data);
-  };
-
   var toggle = function (disabled) {
     if (disabled) {
       main.lastChild.remove();
@@ -64,6 +60,11 @@
   mainPin.addEventListener('mousedown', mainPinClickHandler);
 
   window.address.setAddress(mainPinAddressInput);
+
+  var addPins = function (data) {
+    window.data.drawPins(data);
+    window.filter.getHouseTypeFilter(data);
+  };
 
   window.activator = {
     toggle: toggle
