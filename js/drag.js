@@ -15,10 +15,10 @@
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
-    // var startCoords = {
-    //   x: evt.clientX,
-    //   y: evt.clientY
-    // };
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
 
     var dragged = false;
 
@@ -26,46 +26,46 @@
       moveEvt.preventDefault();
       dragged = true;
 
-      // var shift = {
-      //   x: startCoords.x - moveEvt.clientX,
-      //   y: startCoords.y - moveEvt.clientY
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      if ((mainPin.offsetLeft - shift.x <= mapLimit.right) && ((mainPin.offsetLeft - shift.x) >= mapLimit.left)) {
+        mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+        // console.log(shift.x);
+      }
+      if (((mainPin.offsetTop - shift.y) <= mapLimit.bottom) && ((mainPin.offsetTop - shift.y) >= mapLimit.top)) {
+        mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
+      }
+
+      // var newLocation = {
+      //   left: mapLimit.left,
+      //   top: mapLimit.top
       // };
       //
-      // startCoords = {
-      //   x: moveEvt.clientX,
-      //   y: moveEvt.clientY
+      // var relocate = function (location) {
+      //   mainPin.style.left = location.x + 'px';
+      //   mainPin.style.top = location.y + 'px';
       // };
-
-      // if ((mainPin.offsetLeft - shift.x <= mapLimit.right) && ((mainPin.offsetLeft - shift.x) >= mapLimit.left)) {
-      //   mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
-      //   console.log(shift.x);
+      //
+      // if (moveEvt.pageX > mapLimit.right) {
+      //   newLocation.x = mapLimit.right;
+      // } else if (moveEvt.pageX > mapLimit.left) {
+      //   newLocation.x = moveEvt.pageX;
       // }
-      // if (((mainPin.offsetTop - shift.y) <= mapLimit.bottom) && ((mainPin.offsetTop - shift.y) >= mapLimit.top)) {
-      //   mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
+      // if (moveEvt.pageY > mapLimit.bottom) {
+      //   newLocation.y = mapLimit.bottom;
+      // } else if (moveEvt.pageY > mapLimit.top) {
+      //   newLocation.y = moveEvt.pageY;
       // }
-
-      var newLocation = {
-        left: mapLimit.left,
-        top: mapLimit.top
-      };
-
-      var relocate = function (location) {
-        mainPin.style.left = location.x + 'px';
-        mainPin.style.top = location.y + 'px';
-      };
-
-      if (moveEvt.pageX > mapLimit.right) {
-        newLocation.x = mapLimit.right;
-      } else if (moveEvt.pageX > mapLimit.left) {
-        newLocation.x = moveEvt.pageX;
-      }
-      if (moveEvt.pageY > mapLimit.bottom) {
-        newLocation.y = mapLimit.bottom;
-      } else if (moveEvt.pageY > mapLimit.top) {
-        newLocation.y = moveEvt.pageY;
-      }
-
-      relocate(newLocation);
+      //
+      // relocate(newLocation);
       window.address.setAddress(mainPinAddressInput);
     };
 
