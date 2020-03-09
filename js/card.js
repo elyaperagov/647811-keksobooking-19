@@ -2,7 +2,6 @@
 (function () {
   var map = document.querySelector('.map');
   var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
-  // var filter = document.querySelector('.map__filters-container');
 
   var getHouseType = function (type) {
     switch (type) {

@@ -60,10 +60,15 @@
   mainPin.addEventListener('mousedown', mainPinClickHandler);
 
   window.address.setAddress(mainPinAddressInput);
+  // var filter = document.querySelector('.map__filters-container');
 
   var addPins = function (data) {
     window.data.drawPins(data);
+    // filter.addEventListener('change', window.filter.filterAllOptions(data));
     window.filter.getHouseTypeFilter(data);
+    window.filter.getPriceFilter(data);
+    window.filter.getRoomsFilter(data);
+    // window.filter.getFeaturesFilter(data);
   };
 
   window.activator = {
