@@ -8,6 +8,13 @@
   //   'house': 'house',
   //   'palace': 'flat'
   // }
+
+  var filterReset = function (filteredPins) {
+    window.card.removeOldCard();
+    window.data.removePins();
+    window.data.drawPins(filteredPins);
+  };
+
   var filterByHouseType = function (offer) {
     var offersOfType = offer.filter(function (pin) {
       if (houseTypeFilter.value === 'any') {
@@ -15,9 +22,7 @@
       }
       return houseTypeFilter.value === pin.offer.type;
     });
-    window.card.removeOldCard();
-    window.data.removePins();
-    window.data.drawPins(offersOfType);
+    filterReset(offersOfType);
   };
 
   var getHouseTypeFilter = function (offer) {
