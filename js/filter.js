@@ -3,7 +3,8 @@
   var houseTypeFilter = document.querySelector('#housing-type');
   var priceFilter = document.querySelector('#housing-price');
   var roomsFilter = document.querySelector('#housing-rooms');
-  // var featuresFilter = document.querySelector('.map__features');
+  var featuresFilter = document.querySelector('.map__features');
+  var filters = document.querySelector('.map__filters');
 
   // var valueToAnotherValue = {
   //   'flat': 'flat',
@@ -18,40 +19,44 @@
     window.data.drawPins(filteredPins);
   };
 
-  var filterByHouseType = function (offer) {
-    var offersOfType = offer.filter(function (pin) {
+  // var houseArray = [];
+  // var roomsArray = [];
+  // var pricesArray = [];
+
+  var filterByHouseType = function (pin) {
+    // houseArray = offer.filter(function (pin) {
       if (houseTypeFilter.value === 'any') {
         return pin.offer.type;
       }
-      return houseTypeFilter.value === pin.offer.type;
-    });
-    filterReset(offersOfType);
+      console.log(houseTypeFilter.value === pin.offer.type);
+    // });
   };
 
   var getHouseTypeFilter = function (offer) {
     houseTypeFilter.addEventListener('change', function () {
       filterByHouseType(offer);
+      filterReset(houseArray);
     });
   };
 
-  var filterByRoomsQuantity = function (offer) {
-    var offersOfType = offer.filter(function (pin) {
+  var filterByRoomsQuantity = function (pin) {
+    // roomsArray = offer.filter(function (pin) {
       if (roomsFilter.value === 'any') {
         return pin.offer.rooms;
       }
       return Number(roomsFilter.value) === pin.offer.rooms;
-    });
-    filterReset(offersOfType);
+    // });
   };
 
   var getRoomsFilter = function (offer) {
     roomsFilter.addEventListener('change', function () {
       filterByRoomsQuantity(offer);
+      filterReset(roomsArray);
     });
   };
 
-  var filterByPrice = function (offer) {
-    var offersOfType = offer.filter(function (pin) {
+  var filterByPrice = function (pin) {
+    // pricesArray = offer.filter(function (pin) {
       if (priceFilter.value === 'low') {
         return pin.offer.price < 10000;
       } if (priceFilter.value === 'middle') {
@@ -60,15 +65,29 @@
         return pin.offer.price >= 50000;
       }
       return pin.offer.price;
-    });
-    filterReset(offersOfType);
+    // });
   };
 
   var getPriceFilter = function (offer) {
     priceFilter.addEventListener('change', function () {
       filterByPrice(offer);
+      filterReset(pricesArray);
     });
   };
+
+  function applyFilters(data) {
+    return data
+      .filter(function (offer) {
+        return (
+          filterByHouseType(offer) &&
+          filterByRoomsQuantity(offer) &&
+          filterByPrice(offer)
+        );
+        filterReset(offer);
+      });
+  }
+
+
 
   // var getFeaturesFilter = function (offer) {
   //   featuresFilter.addEventListener('change', function () {
@@ -103,18 +122,11 @@
   //   return filtered;
   // }
 
-  // var filterAllOptions = function (evt) {
-  //   if (evt.target === houseTypeFilter) {
-  //     filterByHouseType(offer);
-  //   } if (evt.target === roomsFilter) {
-  //     filterByRoomsQuantity(offer);
-  //   }
-  // };
-
   window.filter = {
     getHouseTypeFilter: getHouseTypeFilter,
     getPriceFilter: getPriceFilter,
-    getRoomsFilter: getRoomsFilter
+    getRoomsFilter: getRoomsFilter,
+    applyFilters: applyFilters
     // getFeaturesFilter: getFeaturesFilter
   };
 })();

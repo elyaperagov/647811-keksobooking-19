@@ -61,11 +61,12 @@
 
   window.address.setAddress(mainPinAddressInput);
 
+  var filters = document.querySelector('.map__filters');
+
   var addPins = function (data) {
     window.data.drawPins(data);
-    window.filter.getHouseTypeFilter(data);
-    window.filter.getPriceFilter(data);
-    window.filter.getRoomsFilter(data);
+    // window.filter.filter(data);
+    filters.addEventListener('change', window.filter.applyFilters(data));
     // window.filter.getFeaturesFilter(data);
   };
 
