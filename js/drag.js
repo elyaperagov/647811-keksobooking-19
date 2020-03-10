@@ -20,7 +20,6 @@
       y: evt.clientY
     };
 
-
     var dragged = false;
 
     var onMouseMove = function (moveEvt) {
@@ -37,25 +36,36 @@
         y: moveEvt.clientY
       };
 
-      if (((mainPin.offsetLeft - shift.x) <= mapLimit.right) && ((mainPin.offsetLeft - shift.x) >= mapLimit.left)) {
+      if ((mainPin.offsetLeft - shift.x <= mapLimit.right) && ((mainPin.offsetLeft - shift.x) >= mapLimit.left)) {
         mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+        // console.log(shift.x);
       }
       if (((mainPin.offsetTop - shift.y) <= mapLimit.bottom) && ((mainPin.offsetTop - shift.y) >= mapLimit.top)) {
         mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
       }
 
-      // if (e.pageX > limits.right) {
-      //    newLocation.x = limits.right;
-      //  } else if (e.pageX > limits.left) {
-      //    newLocation.x = e.pageX;
-      //  }
-      //  if (e.pageY > limits.bottom) {
-      //    newLocation.y = limits.bottom;
-      //  } else if (e.pageY > limits.top) {
-      //    newLocation.y = e.pageY;
-      //  }
-
-      // console.log(mainPin.getBoundingClientRect());
+      // var newLocation = {
+      //   left: mapLimit.left,
+      //   top: mapLimit.top
+      // };
+      //
+      // var relocate = function (location) {
+      //   mainPin.style.left = location.x + 'px';
+      //   mainPin.style.top = location.y + 'px';
+      // };
+      //
+      // if (moveEvt.pageX > mapLimit.right) {
+      //   newLocation.x = mapLimit.right;
+      // } else if (moveEvt.pageX > mapLimit.left) {
+      //   newLocation.x = moveEvt.pageX;
+      // }
+      // if (moveEvt.pageY > mapLimit.bottom) {
+      //   newLocation.y = mapLimit.bottom;
+      // } else if (moveEvt.pageY > mapLimit.top) {
+      //   newLocation.y = moveEvt.pageY;
+      // }
+      //
+      // relocate(newLocation);
       window.address.setAddress(mainPinAddressInput);
     };
 
