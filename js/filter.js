@@ -5,7 +5,6 @@
   var roomsFilter = document.querySelector('#housing-rooms');
   var guestsFilter = document.querySelector('#housing-guests');
   var featuresFilter = document.querySelector('.map__features');
-
   var wifi = featuresFilter.querySelector('#filter-wifi');
   var dishwasher = featuresFilter.querySelector('#filter-dishwasher');
   var parking = featuresFilter.querySelector('#filter-parking');
