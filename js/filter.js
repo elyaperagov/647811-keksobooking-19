@@ -5,6 +5,7 @@
   var roomsFilter = document.querySelector('#housing-rooms');
   var guestsFilter = document.querySelector('#housing-guests');
   var featuresFilter = document.querySelector('.map__features');
+
   var wifi = featuresFilter.querySelector('#filter-wifi');
   var dishwasher = featuresFilter.querySelector('#filter-dishwasher');
   var parking = featuresFilter.querySelector('#filter-parking');
@@ -52,7 +53,7 @@
   };
 
   var filterByPrice = function (pin) {
-    if (featuresFilter.value === 'low') {
+    if (priceFilter.value === 'low') {
       return pin.offer.price < 10000;
     } if (priceFilter.value === 'middle') {
       return pin.offer.price >= 10000 && pin.offer.price < 50000;
