@@ -9,6 +9,8 @@
   var adForm = document.querySelector('.ad-form');
   var map = document.querySelector('.map');
   var mainPin = document.querySelector('.map__pin--main');
+  var filters = document.querySelector('.map__filters');
+
   var unfadeMap = function () {
     map.classList.remove('map--faded');
   };
@@ -60,15 +62,17 @@
   mainPin.addEventListener('mousedown', mainPinClickHandler);
 
   window.address.setAddress(mainPinAddressInput);
-  // var filter = document.querySelector('.map__filters-container');
 
   var addPins = function (data) {
     window.data.drawPins(data);
-    window.filter.getHouseTypeFilter(data);
-    // window.filter.getPriceFilter(data);
-    // window.filter.getRoomsFilter(data);
-    // window.filter.getFeaturesFilter(data);
+
+    filters.addEventListener('change', window.debounce(function () {
+      window.filter.filterReset();
+      window.data.drawPins(window.filter.applyFilters(data));
+    }));
+
   };
+
 
   window.activator = {
     toggle: toggle
