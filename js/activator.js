@@ -66,10 +66,10 @@
   var addPins = function (data) {
     window.data.drawPins(data);
 
-    filters.addEventListener('change', function () {
+    filters.addEventListener('change', window.debounce(function () {
       window.filter.filterReset();
       window.data.drawPins(window.filter.applyFilters(data));
-    });
+    }));
 
   };
 
