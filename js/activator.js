@@ -38,7 +38,6 @@
       window.backend.load(URL, addPins, window.helpers.showErrorMessage);
       adForm.classList.remove('ad-form--disabled');
       window.address.setAddress(mainPinAddressInput);
-      // mainPin.removeEventListener('keydown', mainPinKeyDownHandler); // почему нельзя удалить внутри mainPinKeyDownHandler?
     }
   };
 
@@ -70,9 +69,7 @@
       window.filter.filterReset();
       window.data.drawPins(window.filter.applyFilters(data));
     }));
-
   };
-
 
   window.activator = {
     toggle: toggle

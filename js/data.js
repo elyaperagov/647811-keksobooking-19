@@ -1,21 +1,17 @@
 'use strict';
 (function () {
+  var PIN_WIDTH = 50;
+  var PIN_HEIGHT = 70;
   var map = document.querySelector('.map');
   var pins = document.querySelector('.map__pins');
   var template = document.querySelector('#pin').content.querySelector('.map__pin');
 
-  var PIN_WIDTH = 50;
-  var PIN_HEIGHT = 70;
-
   var drawPins = function (pinArray) {
     var fragment = document.createDocumentFragment();
     if (pinArray.length > 5) {
-      pinArray = pinArray.slice(0, 5); // как это сделать со splice?
+      pinArray = pinArray.slice(0, 5);
     }
     pinArray.forEach(function (element) {
-      // if(pinArray.length > 5) {
-
-      // }
       var userPin = template.cloneNode(true);
       userPin.style.left = (element.location.x - PIN_WIDTH * 0.5) + 'px';
       userPin.style.top = (element.location.y - PIN_HEIGHT) + 'px';
@@ -28,7 +24,6 @@
         window.card.renderCards(element);
       });
     });
-    // var removedItems = pins.splice(5, 10);
     pins.appendChild(fragment);
   };
 
