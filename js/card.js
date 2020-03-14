@@ -46,6 +46,11 @@
     popupPhotos.appendChild(fragment);
   };
 
+  var closePopup = function () {
+    removeOldCard();
+    removePinActiveClass();
+  };
+
   var removeOldCard = function () {
     var oldCard = map.querySelector('.map__card');
     if (oldCard) {
@@ -79,6 +84,7 @@
     var popupClose = element.querySelector('.popup__close');
 
     var cardClickHandler = function () {
+      closePopup();
       popupClose.removeEventListener('click', cardClickHandler);
       document.removeEventListener('keydown', cardClickHandler);
     };
