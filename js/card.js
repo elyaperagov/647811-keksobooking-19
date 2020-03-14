@@ -93,6 +93,7 @@
     document.addEventListener('keydown', cardClickHandler);
   };
 
+
   window.card = {
     renderCards: renderCards,
     removePinActiveClass: removePinActiveClass,
