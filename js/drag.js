@@ -1,8 +1,5 @@
 'use strict';
 (function () {
-  var map = document.querySelector('.map__overlay');
-  var mainPin = document.querySelector('.map__pin--main');
-  var mainPinAddressInput = document.querySelector('#address');
   var TOP_LIMIT = 130;
   var BOTTOM_LIMIT = 630;
   var mapLimit = {
@@ -10,6 +7,15 @@
     right: map.offsetWidth + map.offsetLeft - mainPin.offsetWidth,
     bottom: BOTTOM_LIMIT,
     left: map.offsetLeft
+  };
+  var map = document.querySelector('.map__overlay');
+  var mainPin = document.querySelector('.map__pin--main');
+  var mainPinAddressInput = document.querySelector('#address');
+  var defaultPinPosition = [mainPin.offsetLeft, mainPin.offsetTop];
+
+  var returnToDefaultPin = function () {
+    mainPin.style.left = defaultPinPosition[0] + 'px';
+    mainPin.style.top = defaultPinPosition[1] + 'px';
   };
 
   mainPin.addEventListener('mousedown', function (evt) {
@@ -64,4 +70,8 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
+  window.drag = {
+    returnToDefaultPin: returnToDefaultPin
+  };
 })();

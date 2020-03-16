@@ -2,10 +2,6 @@
 (function () {
   var ENTER_KEY = 13;
   var MOUSE_KEY = 0;
-  var DefaultPinPosition = {
-    x: 570,
-    y: 375
-  };
   var mainPinAddressInput = document.querySelector('#address');
   var fieldsets = document.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('select[class=map__filter]');
@@ -38,8 +34,7 @@
       mainPin.addEventListener('keydown', mainPinKeyDownHandler);
       document.removeEventListener('click', window.form.deActivate);
       document.removeEventListener('keydown', window.form.deActivate);
-      mainPin.style.top = DefaultPinPosition.y + 'px';
-      mainPin.style.left = DefaultPinPosition.x + 'px';
+      window.drag.returnToDefaultPin();
       window.address.setAddress(mainPinAddressInput);
     } else {
       unfadeMap();
@@ -83,7 +78,6 @@
 
   window.activator = {
     toggle: toggle
-    // setDisabledState: setDisabledState
   };
 
 })();
