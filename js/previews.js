@@ -42,4 +42,10 @@
   formFileChooser.addEventListener('change', function () {
     changePreview(addPreview(), formFileChooser);
   });
+
+  window.previews = {
+    avatarPreview: avatarPreview,
+    formPicturePreview: formPicturePreview
+  };
+
 })();

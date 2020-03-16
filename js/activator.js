@@ -2,7 +2,10 @@
 (function () {
   var ENTER_KEY = 13;
   var MOUSE_KEY = 0;
-  var main = document.querySelector('main');
+  var DefaultPinPosition = {
+    x: 570,
+    y: 375
+  };
   var mainPinAddressInput = document.querySelector('#address');
   var fieldsets = document.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('select[class=map__filter]');
@@ -20,17 +23,24 @@
 
   var toggle = function (disabled) {
     if (disabled) {
-      main.lastChild.remove();
+      var successPopup = document.querySelector('.success');
+      var errorPopup = document.querySelector('.error');
+      window.previews.avatarPreview.src = 'img/muffin-grey.svg';
+      window.previews.formPicturePreview.innerHTML = '';
+      window.helpers.removeNode(successPopup, errorPopup);
       map.classList.add('map--faded');
       window.form.clearForm();
+      filters.reset();
       window.helpers.changeMapState(fieldsets, true);
       window.helpers.changeMapState(mapFilters, true);
-      window.address.setAddress(mainPinAddressInput);
       window.data.removePins();
       mainPin.addEventListener('mousedown', mainPinClickHandler);
       mainPin.addEventListener('keydown', mainPinKeyDownHandler);
       document.removeEventListener('click', window.form.deActivate);
       document.removeEventListener('keydown', window.form.deActivate);
+      mainPin.style.top = DefaultPinPosition.y + 'px';
+      mainPin.style.left = DefaultPinPosition.x + 'px';
+      window.address.setAddress(mainPinAddressInput);
     } else {
       unfadeMap();
       window.helpers.changeMapState(fieldsets, false);
@@ -73,6 +83,7 @@
 
   window.activator = {
     toggle: toggle
+    // setDisabledState: setDisabledState
   };
 
 })();

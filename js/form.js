@@ -71,7 +71,12 @@
     form.classList.add('ad-form--disabled');
   };
 
-  reset.addEventListener('click', formReset);
+  var switchToDefault = function () {
+    clearForm();
+    deActivate();
+  };
+
+  reset.addEventListener('click', switchToDefault);
 
   window.form = {
     clearForm: clearForm,

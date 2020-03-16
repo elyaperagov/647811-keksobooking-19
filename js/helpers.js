@@ -57,6 +57,14 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
+  var removeNode = function (successNode, errorNode) {
+    if (successNode) {
+      successNode.remove();
+    } if (errorNode) {
+      errorNode.remove();
+    }
+  };
+
   window.helpers = {
     getRandomArray: getRandomArray,
     getRandomInteger: getRandomInteger,
@@ -65,7 +73,8 @@
     getSelectedOption: getSelectedOption,
     changeMapState: changeMapState,
     isEscEvent: isEscEvent,
-    showErrorMessage: showErrorMessage
+    showErrorMessage: showErrorMessage,
+    removeNode: removeNode
   };
 
 })();
