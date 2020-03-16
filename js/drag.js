@@ -11,11 +11,14 @@
     bottom: BOTTOM_LIMIT,
     left: map.offsetLeft
   };
-  var defaultPinPosition = [mainPin.offsetLeft, mainPin.offsetTop];
+  var defaultPinPosition = {
+    left: mainPin.offsetLeft,
+    top: mainPin.offsetTop
+  };
 
   var returnToDefaultPin = function () {
-    mainPin.style.left = defaultPinPosition[0] + 'px';
-    mainPin.style.top = defaultPinPosition[1] + 'px';
+    mainPin.style.left = defaultPinPosition.left + 'px';
+    mainPin.style.top = defaultPinPosition.top + 'px';
   };
 
   mainPin.addEventListener('mousedown', function (evt) {
