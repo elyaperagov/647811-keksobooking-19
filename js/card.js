@@ -18,15 +18,6 @@
     }
   };
 
-  // var FeaturesClassMap = {
-  //   'wifi': 'popup__feature--wifi',
-  //   'dishwasher': 'popup__feature--dishwasher',
-  //   'parking': 'popup__feature--parking',
-  //   'washer': 'popup__feature--washer',
-  //   'elevator': 'popup__feature--elevator',
-  //   'conditioner': 'popup__feature--conditioner'
-  // }; !! СПРОСИТЬ КАК ПРОЧИТАТЬ ЗНАЧЕНИЕ ИЗ ЭТОГО ОБЪЕКТА И ДОБАВИТЬ В card.offer.features!!!
-
   var addFeatures = function (node, feature) {
     var cardFeatures = node.querySelector('.popup__features');
     cardFeatures.innerHTML = '';
@@ -81,7 +72,7 @@
     var element = adTemplate.cloneNode(true);
     element.querySelector('.popup__title').textContent = card.offer.title;
     element.querySelector('.popup__text--address').textContent = card.offer.address;
-    element.querySelector('.popup__text--price').textContent = card.offer.price + '₽/ночь';
+    element.querySelector('.popup__text--price').textContent = card.offer.price + 'р/ночь';
     element.querySelector('.popup__type').textContent = getHouseType(card.offer.type);
     element.querySelector('.popup__text--capacity').textContent = card.offer.rooms + ' комнаты для ' + card.offer.guests + ' гостей';
     element.querySelector('.popup__text--time').textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
@@ -101,6 +92,7 @@
     popupClose.addEventListener('click', cardClickHandler);
     document.addEventListener('keydown', cardClickHandler);
   };
+
 
   window.card = {
     renderCards: renderCards,

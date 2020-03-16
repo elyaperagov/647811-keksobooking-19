@@ -2,7 +2,6 @@
 (function () {
   var ENTER_KEY = 13;
   var MOUSE_KEY = 0;
-  var main = document.querySelector('main');
   var mainPinAddressInput = document.querySelector('#address');
   var fieldsets = document.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('select[class=map__filter]');
@@ -20,17 +19,23 @@
 
   var toggle = function (disabled) {
     if (disabled) {
-      main.lastChild.remove();
+      var successPopup = document.querySelector('.success');
+      var errorPopup = document.querySelector('.error');
+      window.previews.avatarPreview.src = 'img/muffin-grey.svg';
+      window.previews.formPicturePreview.innerHTML = '';
+      window.helpers.removeNode(successPopup, errorPopup);
       map.classList.add('map--faded');
       window.form.clearForm();
+      filters.reset();
       window.helpers.changeMapState(fieldsets, true);
       window.helpers.changeMapState(mapFilters, true);
-      window.address.setAddress(mainPinAddressInput);
       window.data.removePins();
       mainPin.addEventListener('mousedown', mainPinClickHandler);
       mainPin.addEventListener('keydown', mainPinKeyDownHandler);
       document.removeEventListener('click', window.form.deActivate);
       document.removeEventListener('keydown', window.form.deActivate);
+      window.drag.returnToDefaultPin();
+      window.address.setAddress(mainPinAddressInput);
     } else {
       unfadeMap();
       window.helpers.changeMapState(fieldsets, false);
@@ -38,7 +43,6 @@
       window.backend.load(URL, addPins, window.helpers.showErrorMessage);
       adForm.classList.remove('ad-form--disabled');
       window.address.setAddress(mainPinAddressInput);
-      // mainPin.removeEventListener('keydown', mainPinKeyDownHandler); // почему нельзя удалить внутри mainPinKeyDownHandler?
     }
   };
 
@@ -70,9 +74,7 @@
       window.filter.filterReset();
       window.data.drawPins(window.filter.applyFilters(data));
     }));
-
   };
-
 
   window.activator = {
     toggle: toggle
