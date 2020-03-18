@@ -80,7 +80,7 @@
     }));
   };
 
-  window.backend.load(URL, fadeMap, window.helpers.p);
+  window.backend.load(URL, fadeMap, window.helpers.showOfflineErrorMessage);
 
   window.activator = {
     toggle: toggle
