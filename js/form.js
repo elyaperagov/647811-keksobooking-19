@@ -39,6 +39,11 @@
 
   form.addEventListener('change', setOptions);
 
+  var setDefaultPrice = function () {
+    price.min = '0';
+    price.placeholder = '0';
+  };
+
   var deActivate = function () {
     window.activator.toggle(true);
   };
@@ -80,7 +85,8 @@
 
   window.form = {
     clearForm: clearForm,
-    deActivate: deActivate
+    deActivate: deActivate,
+    setDefaultPrice: setDefaultPrice
   };
 
 })();

@@ -30,6 +30,7 @@
       window.helpers.removeNode(successPopup, errorPopup);
       fadeMap();
       window.form.clearForm();
+      window.form.setDelautPrice();
       filters.reset();
       window.helpers.changeMapState(fieldsets, true);
       window.helpers.changeMapState(mapFilters, true);
@@ -46,6 +47,7 @@
       window.helpers.changeMapState(mapFilters, false);
       window.backend.load(URL, addPins, window.helpers.showErrorMessage);
       adForm.classList.remove('ad-form--disabled');
+      window.form.setDelautPrice();
       window.address.setAddress(mainPinAddressInput);
     }
   };
