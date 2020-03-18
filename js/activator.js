@@ -30,15 +30,15 @@
       window.helpers.removeNode(successPopup, errorPopup);
       fadeMap();
       window.form.clearForm();
-      window.form.setDelautPrice();
+      window.form.setDefaultPrice();
       filters.reset();
       window.helpers.changeMapState(fieldsets, true);
       window.helpers.changeMapState(mapFilters, true);
       window.data.removePins();
       mainPin.addEventListener('mousedown', mainPinClickHandler);
       mainPin.addEventListener('keydown', mainPinKeyDownHandler);
-      document.removeEventListener('click', window.form.deActivate);
-      document.removeEventListener('keydown', window.form.deActivate);
+      document.removeEventListener('click', window.form.toggleActivateHandler);
+      document.removeEventListener('keydown', window.form.toggleActivateHandler);
       window.drag.returnToDefaultPin();
       window.address.setAddress(mainPinAddressInput);
     } else {
@@ -47,7 +47,7 @@
       window.helpers.changeMapState(mapFilters, false);
       window.backend.load(URL, addPins, window.helpers.showErrorMessage);
       adForm.classList.remove('ad-form--disabled');
-      window.form.setDelautPrice();
+      window.form.setDefaultPrice();
       window.address.setAddress(mainPinAddressInput);
     }
   };
