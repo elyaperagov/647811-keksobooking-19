@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var ESC_KEYCODE = 27;
   var map = document.querySelector('.map');
   var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
@@ -14,7 +15,7 @@
       case 'palace':
         return 'Дворец';
       default:
-        throw new Error('Неизвестный тип жилья: «' + type + '»');
+        return 'Неизвестный типа жилья';
     }
   };
 
@@ -46,10 +47,6 @@
     popupPhotos.appendChild(fragment);
   };
 
-  var closePopup = function () {
-    removeOldCard();
-    removePinActiveClass();
-  };
 
   var removeOldCard = function () {
     var oldCard = map.querySelector('.map__card');
@@ -72,7 +69,7 @@
     var element = adTemplate.cloneNode(true);
     element.querySelector('.popup__title').textContent = card.offer.title;
     element.querySelector('.popup__text--address').textContent = card.offer.address;
-    element.querySelector('.popup__text--price').textContent = card.offer.price + 'р/ночь';
+    element.querySelector('.popup__text--price').textContent = card.offer.price + '₽/ночь';
     element.querySelector('.popup__type').textContent = getHouseType(card.offer.type);
     element.querySelector('.popup__text--capacity').textContent = card.offer.rooms + ' комнаты для ' + card.offer.guests + ' гостей';
     element.querySelector('.popup__text--time').textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
@@ -83,16 +80,22 @@
     map.insertBefore(element, map.querySelector('.map__filters-container'));
     var popupClose = element.querySelector('.popup__close');
 
-    var cardClickHandler = function () {
-      closePopup();
-      popupClose.removeEventListener('click', cardClickHandler);
-      document.removeEventListener('keydown', cardClickHandler);
+    var closePopup = function () {
+      removeOldCard();
+      removePinActiveClass();
+      popupClose.removeEventListener('click', closePopup);
+      document.removeEventListener('keydown', cardKeydownHandler);
     };
 
-    popupClose.addEventListener('click', cardClickHandler);
-    document.addEventListener('keydown', cardClickHandler);
-  };
+    popupClose.addEventListener('click', closePopup);
 
+    var cardKeydownHandler = function (evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        closePopup();
+      }
+    };
+    document.addEventListener('keydown', cardKeydownHandler);
+  };
 
   window.card = {
     renderCards: renderCards,

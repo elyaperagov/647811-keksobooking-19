@@ -1,11 +1,10 @@
 'use strict';
 (function () {
-  var URL = 'https://js.dump.academy/keksobooking';
   var OK_STATUS = 200;
   var TIMEOUT = 10000;
 
   var load = function (LOAD_URL, onSuccess, onError) {
-    LOAD_URL = URL + '/data';
+    LOAD_URL = 'https://js.dump.academy/keksobooking/data';
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -30,6 +29,7 @@
   };
 
   var send = function (data, onLoad, onError) {
+    var URL = 'https://js.dump.academy/keksobooking';
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {

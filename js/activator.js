@@ -14,6 +14,10 @@
     map.classList.remove('map--faded');
   };
 
+  var fadeMap = function () {
+    map.classList.add('map--faded');
+  };
+
   window.helpers.changeMapState(fieldsets, true);
   window.helpers.changeMapState(mapFilters, true);
 
@@ -24,7 +28,7 @@
       window.previews.avatarPreview.src = 'img/muffin-grey.svg';
       window.previews.formPicturePreview.innerHTML = '';
       window.helpers.removeNode(successPopup, errorPopup);
-      map.classList.add('map--faded');
+      fadeMap();
       window.form.clearForm();
       filters.reset();
       window.helpers.changeMapState(fieldsets, true);
@@ -75,6 +79,8 @@
       window.data.drawPins(window.filter.applyFilters(data));
     }));
   };
+
+  window.backend.load(URL, fadeMap, window.helpers.p);
 
   window.activator = {
     toggle: toggle
