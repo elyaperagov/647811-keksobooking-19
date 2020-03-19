@@ -11,6 +11,15 @@
     bottom: BOTTOM_LIMIT,
     left: map.offsetLeft
   };
+  var defaultPinPosition = {
+    left: mainPin.offsetLeft,
+    top: mainPin.offsetTop
+  };
+
+  var returnToDefaultPin = function () {
+    mainPin.style.left = defaultPinPosition.left + 'px';
+    mainPin.style.top = defaultPinPosition.top + 'px';
+  };
 
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -38,34 +47,10 @@
 
       if ((mainPin.offsetLeft - shift.x <= mapLimit.right) && ((mainPin.offsetLeft - shift.x) >= mapLimit.left)) {
         mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
-        // console.log(shift.x);
       }
       if (((mainPin.offsetTop - shift.y) <= mapLimit.bottom) && ((mainPin.offsetTop - shift.y) >= mapLimit.top)) {
         mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
       }
-
-      // var newLocation = {
-      //   left: mapLimit.left,
-      //   top: mapLimit.top
-      // };
-      //
-      // var relocate = function (location) {
-      //   mainPin.style.left = location.x + 'px';
-      //   mainPin.style.top = location.y + 'px';
-      // };
-      //
-      // if (moveEvt.pageX > mapLimit.right) {
-      //   newLocation.x = mapLimit.right;
-      // } else if (moveEvt.pageX > mapLimit.left) {
-      //   newLocation.x = moveEvt.pageX;
-      // }
-      // if (moveEvt.pageY > mapLimit.bottom) {
-      //   newLocation.y = mapLimit.bottom;
-      // } else if (moveEvt.pageY > mapLimit.top) {
-      //   newLocation.y = moveEvt.pageY;
-      // }
-      //
-      // relocate(newLocation);
       window.address.setAddress(mainPinAddressInput);
     };
 
@@ -88,4 +73,8 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
+  window.drag = {
+    returnToDefaultPin: returnToDefaultPin
+  };
 })();

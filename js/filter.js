@@ -10,38 +10,24 @@
   var roomsFilter = document.querySelector('#housing-rooms');
   var guestsFilter = document.querySelector('#housing-guests');
   var featuresFilter = document.querySelector('.map__features');
-
-  // var wifi = featuresFilter.querySelector('#filter-wifi');
-  // var dishwasher = featuresFilter.querySelector('#filter-dishwasher');
-  // var parking = featuresFilter.querySelector('#filter-parking');
-  // var washer = featuresFilter.querySelector('#filter-washer');
-  // var elevator = featuresFilter.querySelector('#filter-elevator');
-  // var conditioner = featuresFilter.querySelector('#filter-conditioner');
-  // var filters = document.querySelector('.map__filters');
-
-  // var valueToAnotherValue = {
-  //   'flat': 'flat',
-  //   'bungalo': 'bungalo',
-  //   'house': 'house',
-  //   'palace': 'flat'
-  // } СПРОСИТЬ как прочитать значения из этого объекта
+  var houseType = {
+    'flat': 'flat',
+    'bungalo': 'bungalo',
+    'house': 'house',
+    'palace': 'palace'
+  };
 
   var filterReset = function () {
     window.card.removeOldCard();
     window.data.removePins();
   };
 
-  // var houseArray = [];
-  // var roomsArray = [];
-  // var pricesArray = []; СПРОСИТЬ
-
   var filterByHouseType = function (pin) {
     if (houseTypeFilter.value === 'any') {
       return pin.offer.type;
     }
-    return houseTypeFilter.value === pin.offer.type;
+    return houseType[houseTypeFilter.value] === pin.offer.type;
   };
-
 
   var filterByRoomsQuantity = function (pin) {
     if (roomsFilter.value === 'any') {
@@ -71,35 +57,12 @@
     }
   };
 
-  // var filterCheckboxes = Array.from(featuresFilter.querySelectorAll('input:checked');
-
-  // var filterByFeatures = function (pin) {
-  //   filterCheckboxes.forEach(function (element) {
-  //     if (element.checked)
-  //     return pin.offer.features.includes(element.value);
-  //     // console.log(element.checked)
-  //   })
-  // }
-
   var filterByFeatures = function (pin) {
-    var filteredCheckboxes = Array.from(featuresFilter.querySelectorAll('input:checked')); // почему не работает если объявить за пределами функции?
+    var filteredCheckboxes = Array.from(featuresFilter.querySelectorAll('input:checked'));
     return filteredCheckboxes.every(function (feature) {
       return pin.offer.features.includes(feature.value);
     });
   };
-
-  // var filterByFeatures = function (pin) {
-  //   var result;
-  //     if (wifi.checked) {
-  //     result = pin.offer.features.includes('wifi');
-  //   } if (dishwasher.checked) {
-  //     result = pin.offer.features.includes('dishwasher');
-  //   } if (parking.checked) {
-  //     result = pin.offer.features.includes('parking');
-  //   }
-  //   return result;
-  // }
-
 
   var applyFilters = function (data) {
     return data.filter(function (offer) {

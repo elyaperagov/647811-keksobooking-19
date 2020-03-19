@@ -18,7 +18,7 @@
   var imageHeaderInput = form.querySelector('.ad-form-header__input');
   var error = errorTemplate.cloneNode(true);
 
-  var setOptions = function (evt) {
+  var formOptionsHandler = function (evt) {
     if (evt.target === houseType) {
       price.min = ALL_PRICES[window.helpers.getSelectedOption(houseType)];
       price.placeholder = price.min;
@@ -37,22 +37,27 @@
     }
   };
 
-  form.addEventListener('change', setOptions);
+  form.addEventListener('change', formOptionsHandler);
 
-  var deActivate = function () {
+  var setDefaultPrice = function () {
+    price.min = '0';
+    price.placeholder = '0';
+  };
+
+  var toggleActivateHandler = function () {
     window.activator.toggle(true);
   };
 
   var addSuccessWindow = function () {
     main.appendChild(success);
-    document.addEventListener('click', deActivate);
-    document.addEventListener('keydown', deActivate);
+    document.addEventListener('click', toggleActivateHandler);
+    document.addEventListener('keydown', toggleActivateHandler);
   };
 
   var addErrorWindow = function () {
     main.appendChild(error);
-    document.addEventListener('click', deActivate);
-    document.addEventListener('keydown', deActivate);
+    document.addEventListener('click', toggleActivateHandler);
+    document.addEventListener('keydown', toggleActivateHandler);
   };
 
   form.addEventListener('submit', function (evt) {
@@ -71,11 +76,17 @@
     form.classList.add('ad-form--disabled');
   };
 
-  reset.addEventListener('click', formReset);
+  var resetHandler = function () {
+    clearForm();
+    toggleActivateHandler();
+  };
+
+  reset.addEventListener('click', resetHandler);
 
   window.form = {
     clearForm: clearForm,
-    deActivate: deActivate
+    toggleActivateHandler: toggleActivateHandler,
+    setDefaultPrice: setDefaultPrice
   };
 
 })();

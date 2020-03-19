@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var ESC_KEYCODE = 27;
   var map = document.querySelector('.map');
   var adTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
@@ -14,18 +15,9 @@
       case 'palace':
         return 'Дворец';
       default:
-        throw new Error('Неизвестный тип жилья: «' + type + '»');
+        return 'Неизвестный типа жилья';
     }
   };
-
-  // var FeaturesClassMap = {
-  //   'wifi': 'popup__feature--wifi',
-  //   'dishwasher': 'popup__feature--dishwasher',
-  //   'parking': 'popup__feature--parking',
-  //   'washer': 'popup__feature--washer',
-  //   'elevator': 'popup__feature--elevator',
-  //   'conditioner': 'popup__feature--conditioner'
-  // }; !! СПРОСИТЬ КАК ПРОЧИТАТЬ ЗНАЧЕНИЕ ИЗ ЭТОГО ОБЪЕКТА И ДОБАВИТЬ В card.offer.features!!!
 
   var addFeatures = function (node, feature) {
     var cardFeatures = node.querySelector('.popup__features');
@@ -55,10 +47,6 @@
     popupPhotos.appendChild(fragment);
   };
 
-  var closePopup = function () {
-    removeOldCard();
-    removePinActiveClass();
-  };
 
   var removeOldCard = function () {
     var oldCard = map.querySelector('.map__card');
@@ -92,14 +80,21 @@
     map.insertBefore(element, map.querySelector('.map__filters-container'));
     var popupClose = element.querySelector('.popup__close');
 
-    var cardClickHandler = function () {
-      closePopup();
-      popupClose.removeEventListener('click', cardClickHandler);
-      document.removeEventListener('keydown', cardClickHandler);
+    var closePopup = function () {
+      removeOldCard();
+      removePinActiveClass();
+      popupClose.removeEventListener('click', closePopup);
+      document.removeEventListener('keydown', cardKeydownHandler);
     };
 
-    popupClose.addEventListener('click', cardClickHandler);
-    document.addEventListener('keydown', cardClickHandler);
+    popupClose.addEventListener('click', closePopup);
+
+    var cardKeydownHandler = function (evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        closePopup();
+      }
+    };
+    document.addEventListener('keydown', cardKeydownHandler);
   };
 
   window.card = {
