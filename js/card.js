@@ -69,7 +69,7 @@
     var element = adTemplate.cloneNode(true);
     element.querySelector('.popup__title').textContent = card.offer.title;
     element.querySelector('.popup__text--address').textContent = card.offer.address;
-    element.querySelector('.popup__text--price').textContent = card.offer.price + '₽/ночь';
+    element.querySelector('.popup__text--price').textContent = card.offer.price + 'р/ночь';
     element.querySelector('.popup__type').textContent = getHouseType(card.offer.type);
     element.querySelector('.popup__text--capacity').textContent = card.offer.rooms + ' комнаты для ' + card.offer.guests + ' гостей';
     element.querySelector('.popup__text--time').textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
@@ -96,6 +96,7 @@
     };
     document.addEventListener('keydown', cardKeydownHandler);
   };
+
 
   window.card = {
     renderCards: renderCards,
